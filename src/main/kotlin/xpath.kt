@@ -27,8 +27,7 @@ class xpath(block: xpath.() -> Unit) {
     }
 
     fun innerText(text: String) {
-        //todo: proper handling of xpath functions
-        addAttribute("normalize-space(.)" to text)
+        addAttribute("." to text)
     }
 
     operator fun String.unaryPlus() = innerText(this)
@@ -47,8 +46,12 @@ class xpath(block: xpath.() -> Unit) {
             string += '['
         }
         attributes.forEach {
-            if (it.key != ".") string += '@'
-            string += "${it.key}='${it.value}'"
+            //todo: proper handling of xpath functions
+            val key = if (it.key == ".")
+                "normalize-space(.)"
+            else
+                "@${it.key}"
+            string += "$key='${it.value}'"
         }
         string += ']'
     }
