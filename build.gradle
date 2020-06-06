@@ -1,0 +1,23 @@
+plugins {
+    id 'org.jetbrains.kotlin.js' version '1.4-M1'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    maven { url 'https://dl.bintray.com/kotlin/kotlin-eap' }
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-js"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-js"
+}
+
+kotlin {
+    target {
+        nodejs { }
+        produceExecutable()
+    }
+}
