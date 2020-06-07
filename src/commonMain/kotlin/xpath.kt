@@ -12,7 +12,7 @@ class xpath(block: xpath.() -> Unit) {
      */
     fun descendantOrSelf(block: xpath.() -> Unit) {
         //todo: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
-        append("/") //first slash is added by the appender (todo: cring)
+        appendElement("/") //first slash is added by the appender (todo: cring)
         block()
     }
 
@@ -21,7 +21,7 @@ class xpath(block: xpath.() -> Unit) {
      */
     fun div(attributes: Map<String, String>?, block: xpath.() -> Unit) {
         //TODO: more abstract handling for element so we dont need to make one of these for every element type
-        append("div")
+        appendElement("div")
         addAttributes(attributes)
         block()
     }
@@ -30,14 +30,14 @@ class xpath(block: xpath.() -> Unit) {
         addAttribute("." to text)
     }
 
-    operator fun String.unaryPlus() = innerText(this)
+    operator fun String.unaryPlus(): Unit = innerText(this)
 
     /**
-     * adds attributes to an xpath. does nothing if attributes are null
+     * adds attributes to an [xpath]. does nothing if [attributes] are null
      */
     private fun addAttributes(attributes: Map<String, String>?) {
         if (attributes == null) return
-        //todo: less cringe
+        //todo: this whole function is messy. should probably be done better
         //if we already have a [], append to it:
         if (string.endsWith(']')) {
             string = string.removeSuffix("]")
@@ -45,32 +45,40 @@ class xpath(block: xpath.() -> Unit) {
         } else {
             string += '['
         }
+        //if checking the innertext normalize space by default. TODO: case insensitivity
         attributes.forEach {
-            //todo: proper handling of xpath functions
-            val key = if (it.key == ".")
-                "normalize-space(.)"
+            if (it.key == ".")
+                function("normalize-space", ".")
             else
-                "@${it.key}"
-            string += "$key='${it.value}'"
+                string += "@${it.key}"
+            string += "='${it.value}'"
         }
         string += ']'
     }
 
+    /**
+     * adds a single attribute to an [xpath]. does nothing if [attribute] is null
+     */
     private fun addAttribute(attribute: Pair<String, String>) = addAttributes(mapOf(attribute))
+
+    /**
+     * appends an xpath function call
+     */
+    private fun function(name: String, vararg args: String) {
+        string += "$name(${args.joinToString()})"
+    }
+
 
     /**
      * appends a new element to the xpath
      */
-    private fun append(str: String) {
+    private fun appendElement(str: String) {
         if (!string.endsWith('/'))
             string += '/'
         string += str
     }
 }
 
-/**
- * egg
- */
 fun main() {
     println(xpath {
         descendantOrSelf {
