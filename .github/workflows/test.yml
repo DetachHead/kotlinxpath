@@ -9,8 +9,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: gradle tests
-      uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14
-      with:
-        args: jvmTest mingwX64Test
+      - uses: actions/checkout@v2
+      - name: gradle tests
+        uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14

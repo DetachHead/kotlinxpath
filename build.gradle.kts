@@ -39,10 +39,10 @@ kotlin {
                 implementation(kotlin("stdlib-js"))
             }
         }
-        //TODO: js tests dont work. mayybe gotta do some convoluted shit https://discuss.kotlinlang.org/t/not-able-to-run-unit-tests-on-kotlin-multiplatform-project/15779
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
+                implementation(kotlin("test-js"))
             }
         }
         //TODO: get this working... mingwX64('mingw').compilations.main.defaultSourceSet { /* ... */ }
