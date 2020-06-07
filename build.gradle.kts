@@ -34,18 +34,18 @@ kotlin {
                 implementation(kotlin("test-junit"))
             }
         }
-        //TODO: these arent run by default.. gotta do some convoluted shit https://discuss.kotlinlang.org/t/not-able-to-run-unit-tests-on-kotlin-multiplatform-project/15779
         val jsMain by getting {
             dependencies {
                 implementation(kotlin("stdlib-js"))
             }
         }
+        //TODO: js tests dont work. mayybe gotta do some convoluted shit https://discuss.kotlinlang.org/t/not-able-to-run-unit-tests-on-kotlin-multiplatform-project/15779
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
             }
         }
-        //TODO: mingwX64('mingw').compilations.main.defaultSourceSet { /* ... */ }
+        //TODO: get this working... mingwX64('mingw').compilations.main.defaultSourceSet { /* ... */ }
         val mingwX64Test by getting { }
     }
 }
