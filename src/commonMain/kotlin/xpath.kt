@@ -78,5 +78,3 @@ class xpath(block: xpath.() -> Unit) {
         string += str
     }
 }
-
-//TODO: test fix duplicate issue on merge
