@@ -1,3 +1,5 @@
+//TODO: testing todo issues
+
 class xpath(block: xpath.() -> Unit) {
     var string = ""
 
@@ -78,4 +80,3 @@ class xpath(block: xpath.() -> Unit) {
         string += str
     }
 }
-//TODO: testing todo issues
