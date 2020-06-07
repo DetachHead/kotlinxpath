@@ -11,7 +11,7 @@ class xpath(block: xpath.() -> Unit) {
      * aka //
      */
     fun descendantOrSelf(block: xpath.() -> Unit) {
-        //todo: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
+        //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
         appendElement("/") //first slash is added by the appender (todo: cring)
         block()
     }
@@ -37,7 +37,7 @@ class xpath(block: xpath.() -> Unit) {
      */
     private fun addAttributes(attributes: Map<String, String>?) {
         if (attributes == null) return
-        //todo: this whole function is messy. should probably be done better
+        //TODO: this whole function is messy. should probably be done better
         //if we already have a [], append to it:
         if (string.endsWith(']')) {
             string = string.removeSuffix("]")
@@ -45,7 +45,7 @@ class xpath(block: xpath.() -> Unit) {
         } else {
             string += '['
         }
-        //if checking the innertext normalize space by default. TODO: case insensitivity
+        //if checking the innertext normalize space by default. TODO: case insensitivity by default (need to use translate function)
         attributes.forEach {
             if (it.key == ".")
                 function("normalize-space", ".")
