@@ -12,4 +12,4 @@ println(xpath {
     }
 })
 ```
-outputs `//div[@id='thing' and @normalize-space(.)='sdfg']`
+outputs `//div[@id='thing' and normalize-space(.)='sdfg']`
