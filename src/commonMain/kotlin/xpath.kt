@@ -78,13 +78,3 @@ class xpath(block: xpath.() -> Unit) {
         string += str
     }
 }
-
-fun main() {
-    println(xpath {
-        descendantOrSelf {
-            div(attributes = mapOf("id" to "thing")) {
-                +"sdfg"
-            }
-        }
-    })
-}
