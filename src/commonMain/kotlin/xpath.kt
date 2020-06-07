@@ -1,5 +1,3 @@
-//TODO: testing todo issues
-
 class xpath(block: xpath.() -> Unit) {
     var string = ""
 
