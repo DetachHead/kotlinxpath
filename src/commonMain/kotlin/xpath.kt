@@ -11,10 +11,12 @@ enum class logicalOperator(val value: String) {
  */
 class xpath(block: xpath.() -> Unit) {
     constructor(str: String) : this({ str() })
+
     private var string = ""
 
     //constants:
-    val descendantOrSelf = "//" //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
+    val descendantOrSelf =
+        "//" //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
     val self = "./"
 
     init {
