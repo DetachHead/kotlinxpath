@@ -14,7 +14,7 @@ class xpath(block: xpath.() -> Unit) {
     private var string = ""
 
     //constants:
-    val descendantOrSelf = "//"
+    val descendantOrSelf = "//" //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
     val self = "./"
 
     init {
@@ -83,6 +83,7 @@ class xpath(block: xpath.() -> Unit) {
         if (attributes == null) return null
         val result = attributes.map {
             (if (it.key == ".")
+                //TODO: case insensitivity by default (need to use translate function)
                 function("normalize-space", ".")
             else
                 "@${it.key}"
