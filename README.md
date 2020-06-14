@@ -8,7 +8,7 @@ kotlin typesafe builder for xpath
 ```kotlin
 println(xpath {
     descendantOrSelf {
-        div(attributes = mapOf("id" to "thing")) {
+        "div"(attributes = mapOf("id" to "thing")) {
             +"sdfg"
         }
     }
