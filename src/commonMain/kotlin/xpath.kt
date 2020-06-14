@@ -1,5 +1,21 @@
+/**
+ * logical operators used for xpath attributes //TODO: implement option to specify which operator to use
+ */
+enum class logicalOperator(val value: String) {
+    and("and"),
+    or("or")
+}
+
+/**
+ * xpath typesafe builder. constructor takes either a string or an extension function. see tests for eggs
+ */
 class xpath(block: xpath.() -> Unit) {
-    var string = ""
+    constructor(str: String) : this({ str() })
+    private var string = ""
+
+    //constants:
+    val descendantOrSelf = "//"
+    val self = "./"
 
     init {
         block()
@@ -8,96 +24,89 @@ class xpath(block: xpath.() -> Unit) {
     override fun toString() = string
 
     /**
-     * aka //
-     */
-    fun descendantOrSelf(block: xpath.() -> Unit): xpath {
-        //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
-        appendElement("/") //first slash is added by the appender (todo: cring)
-        block()
-        return this
-    }
-
-    /**
-     * overrides the / operator on the xpath object to add an element to an xpath
-     * eg. `xpath{...} / "p"``
-     */
-    operator fun div(xpath: xpath) {
-        //currently does nothing, just for syntactic sugar when building the xpath
-    }
-
-    /**
      * overrides the / operator on a string to add an element to an xpath
      * eg. `"div" / "p"``
      */
-    operator fun String.div(xpath: xpath) {
-        this.invoke().toString() + xpath
+    operator fun String.div(xpath: String): String {
+        return appendElement(this, xpath)
     }
 
     /**
-     * adds an element with attributes to the xpath string
+     * adds an element with [attributes] to the xpath string
      */
-    operator fun String.invoke(attributes: Map<String, String>? = null, block: (xpath.() -> Unit)? = null): xpath {
-        appendElement(this)
-        addAttributes(attributes)
-        if (block != null) block()
-        return this@xpath
+    operator fun String.invoke(
+        vararg attributes: Pair<String, String>,
+        text: String?,
+        block: (xpath.() -> Unit)? = null
+    ): String {
+        //TODO: less icky construction of attributes
+        //this constructs a [] thingy in xpath containing either attributes or other xpath expressions.
+        //eg. "//a[./h3[@class='asdf'] and @href='https://blah']"
+        val attributesMap = mutableMapOf(*attributes)
+        if (text != null)
+            attributesMap["."] = text
+        //concatenates multiple attributes using the specified logical operator
+        //then adds any child xpath expressions (assumes they start with self (./))
+        string =
+            "$this[${addAttributes(
+                attributesMap,
+                logicalOperator.and
+            )}${if (block != null) self + xpath { block() }.toString() else ""}]"
+        return string
+    }
+
+    //bunch of overloads for flexibility when invoking. kinda cringe but w/e
+    operator fun String.invoke(vararg attributes: Pair<String, String>) =
+        invoke(attributes = *attributes, text = null, block = null)
+
+    operator fun String.invoke(vararg attributes: Pair<String, String>, text: String) =
+        invoke(attributes = *attributes, text = text, block = null)
+
+    operator fun String.invoke(text: String, block: xpath.() -> Unit) =
+        invoke(attributes = *arrayOf(), text = text, block = block)
+
+    operator fun String.invoke(text: String) =
+        invoke(attributes = *arrayOf(), text = text, block = null)
+
+    operator fun String.invoke(block: xpath.() -> Unit) =
+        invoke(attributes = *arrayOf(), text = null, block = block)
+
+    operator fun String.invoke(index: Int): String {
+        return "$this[$index]"
     }
 
     /**
-     * adds innertext to an xpath
+     * takes a [Map] of [String]s and converts it into attributes for an [xpath] as a [String]
+     * @return null if no attributes are passed
      */
-    private fun innerText(text: String) {
-        addAttribute("." to text)
-    }
-
-    /**
-     * adds innertext to an xpath
-     */
-    operator fun String.unaryPlus(): Unit = innerText(this)
-
-    /**
-     * adds attributes to an [xpath]. does nothing if [attributes] are null
-     */
-    private fun addAttributes(attributes: Map<String, String>?) {
-        if (attributes == null) return
-        //TODO: this whole function is messy. should probably be done better
-        //if we already have a [], append to it:
-        if (string.endsWith(']')) {
-            string = string.removeSuffix("]")
-            string += " and "
-        } else {
-            string += '['
-        }
-        //if checking the innertext normalize space by default. TODO: case insensitivity by default (need to use translate function)
-        attributes.forEach {
-            if (it.key == ".")
+    private fun addAttributes(attributes: Map<String, String>?, operator: logicalOperator): String? {
+        if (attributes == null) return null
+        val result = attributes.map {
+            (if (it.key == ".")
                 function("normalize-space", ".")
             else
-                string += "@${it.key}"
-            string += "='${it.value}'"
+                "@${it.key}"
+                    ) + "='${it.value}'" //cringe idea formatter fail....
         }
-        string += ']'
+        return result.joinToString(" " + operator.value + " ")
     }
 
     /**
-     * adds a single attribute to an [xpath]. does nothing if [attribute] is null
+     * returns an xpath function call as a string
      */
-    private fun addAttribute(attribute: Pair<String, String>) = addAttributes(mapOf(attribute))
-
-    /**
-     * appends an xpath function call
-     */
-    private fun function(name: String, vararg args: String) {
-        string += "$name(${args.joinToString()})"
+    private fun function(name: String, vararg args: String): String {
+        return "$name(${args.joinToString()})"
     }
 
 
     /**
      * appends a new element to the xpath
      */
-    private fun appendElement(str: String) {
-        if (!string.endsWith('/'))
-            string += '/'
-        string += str
+    private fun appendElement(parent: String, child: String): String {
+        string = if (parent.endsWith('/'))
+            parent + child
+        else
+            "$parent/$child"
+        return string
     }
 }
