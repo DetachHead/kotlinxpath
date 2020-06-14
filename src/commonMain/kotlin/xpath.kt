@@ -82,12 +82,12 @@ class xpath(block: xpath.() -> Unit) {
     private fun addAttributes(attributes: Map<String, String>?, operator: logicalOperator): String? {
         if (attributes == null) return null
         val result = attributes.map {
-            (if (it.key == ".")
-                //TODO: case insensitivity by default (need to use translate function)
-                function("normalize-space", ".")
+            //TODO: support for values with single quotes
+            val value = "'${it.value}'"
+            if (it.key == ".")
+                lowercase(function("normalize-space", ".")) + "=" + value.toLowerCase()
             else
-                "@${it.key}"
-                    ) + "='${it.value}'" //cringe idea formatter fail....
+                "@${it.key}=$value"
         }
         return result.joinToString(" " + operator.value + " ")
     }
@@ -99,6 +99,12 @@ class xpath(block: xpath.() -> Unit) {
         return "$name(${args.joinToString()})"
     }
 
+    /**
+     * takes a string and returns a translated xpath function call to standardize it in lowercase
+     */
+    private fun lowercase(string: String): String {
+        return function("translate", string, "'ABCDEFGHIJKLMNOPQRSTUVWXYZ'", "'abcdefghijklmnopqrstuvwxyz'")
+    }
 
     /**
      * appends a new element to the xpath

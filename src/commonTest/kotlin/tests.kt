@@ -18,8 +18,11 @@ class test {
 
     @Test
     fun test3() {
-        assertEquals("//div[./div[normalize-space(.)='asdf']]/div/p[1]", xpath {
-            descendantOrSelf / "div" { "div"("asdf") } / "div" / "p"(1)
-        }.toString())
+        assertEquals(
+            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/p[1]",
+            xpath {
+                descendantOrSelf / "div" { "div"("Asdf") } / "div" / "p"(1)
+            }.toString()
+        )
     }
 }
