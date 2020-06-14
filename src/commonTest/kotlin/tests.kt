@@ -4,9 +4,12 @@ import kotlin.test.assertEquals
 class test {
     @Test
     fun test1() {
-        assertEquals("//div[@id='thing' and normalize-space(.)='sdfg']", xpath {
-            descendantOrSelf / "div"("id" to "thing", text = "sdfg")
-        }.toString())
+        assertEquals(
+            "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
+            xpath {
+                descendantOrSelf / "div"("id" to "thing", text = "sdfg")
+            }.toString()
+        )
     }
 
     @Test
