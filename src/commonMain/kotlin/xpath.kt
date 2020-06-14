@@ -10,26 +10,49 @@ class xpath(block: xpath.() -> Unit) {
     /**
      * aka //
      */
-    fun descendantOrSelf(block: xpath.() -> Unit) {
+    fun descendantOrSelf(block: xpath.() -> Unit): xpath {
         //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
         appendElement("/") //first slash is added by the appender (todo: cring)
         block()
+        return this
     }
 
     /**
-     * adds a div
+     * overrides the / operator on the xpath object to add an element to an xpath
+     * eg. `xpath{...} / "p"``
      */
-    fun div(attributes: Map<String, String>?, block: xpath.() -> Unit) {
-        //TODO: more abstract handling for element so we dont need to make one of these for every element type
-        appendElement("div")
-        addAttributes(attributes)
-        block()
+    operator fun div(xpath: xpath) {
+        //currently does nothing, just for syntactic sugar when building the xpath
     }
 
-    fun innerText(text: String) {
+    /**
+     * overrides the / operator on a string to add an element to an xpath
+     * eg. `"div" / "p"``
+     */
+    operator fun String.div(xpath: xpath) {
+        this.invoke().toString() + xpath
+    }
+
+    /**
+     * adds an element with attributes to the xpath string
+     */
+    operator fun String.invoke(attributes: Map<String, String>? = null, block: (xpath.() -> Unit)? = null): xpath {
+        appendElement(this)
+        addAttributes(attributes)
+        if (block != null) block()
+        return this@xpath
+    }
+
+    /**
+     * adds innertext to an xpath
+     */
+    private fun innerText(text: String) {
         addAttribute("." to text)
     }
 
+    /**
+     * adds innertext to an xpath
+     */
     operator fun String.unaryPlus(): Unit = innerText(this)
 
     /**
