@@ -60,18 +60,24 @@ class xpath(block: xpath.() -> Unit) {
     }
 
     //bunch of overloads for flexibility when invoking. kinda cringe but w/e
+    //removing the spread operator causes runtime errors in js target
+    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(vararg attributes: Pair<String, String>) =
         invoke(attributes = *attributes, text = null, block = null)
 
+    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(vararg attributes: Pair<String, String>, text: String) =
         invoke(attributes = *attributes, text = text, block = null)
 
+    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(text: String, block: xpath.() -> Unit) =
         invoke(attributes = *arrayOf(), text = text, block = block)
 
+    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(text: String) =
         invoke(attributes = *arrayOf(), text = text, block = null)
 
+    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(block: xpath.() -> Unit) =
         invoke(attributes = *arrayOf(), text = null, block = block)
 
@@ -86,8 +92,14 @@ class xpath(block: xpath.() -> Unit) {
     private fun addAttributes(attributes: Map<String, String>?, operator: logicalOperator): String? {
         if (attributes == null) return null
         val result = attributes.map {
-            //TODO: support for values with single quotes
-            val value = "'${it.value}'"
+            //xpath has no real way of escaping, so use various ways to esc values with quotes.
+            //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
+            val value = when {
+                it.value.contains("'") && it.value.contains("\"") ->
+                    "concat('${it.value.replace("'", "',\"'\",'")}')"
+                it.value.contains("'") -> "\"${it.value}\""
+                else -> "'${it.value}'"
+            }
             if (it.key == ".")
                 lowercase(function("normalize-space", ".")) + "=" + value.toLowerCase()
             else
