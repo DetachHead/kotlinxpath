@@ -50,10 +50,12 @@ class xpath(block: xpath.() -> Unit) {
         //concatenates multiple attributes using the specified logical operator
         //then adds any child xpath expressions (assumes they start with self (./))
         string =
-            "$this[${addAttributes(
-                attributesMap,
-                logicalOperator.and
-            )}${if (block != null) self + xpath { block() }.toString() else ""}]"
+            "$this[${
+                addAttributes(
+                    attributesMap,
+                    logicalOperator.and
+                )
+            }${if (block != null) self + xpath { block() }.toString() else ""}]"
         return string
     }
 
