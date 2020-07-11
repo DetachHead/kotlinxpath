@@ -92,8 +92,14 @@ class xpath(block: xpath.() -> Unit) {
     private fun addAttributes(attributes: Map<String, String>?, operator: logicalOperator): String? {
         if (attributes == null) return null
         val result = attributes.map {
-            //TODO: support for values with single quotes
-            val value = "'${it.value}'"
+            //xpath has no real way of escaping, so use various ways to esc values with quotes.
+            //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
+            val value = when {
+                it.value.contains("'") && it.value.contains("\"") ->
+                    "concat('${it.value.replace("'", "',\"'\",'")}')"
+                it.value.contains("'") -> "\"${it.value}\""
+                else -> "'${it.value}'"
+            }
             if (it.key == ".")
                 lowercase(function("normalize-space", ".")) + "=" + value.toLowerCase()
             else

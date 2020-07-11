@@ -27,5 +27,14 @@ class test {
                 descendantOrSelf / "div" { "div"("Asdf") } / "div" / "p"(1)
             }.toString()
         )
-    }
+
+    @Test
+    fun escapequotes() =
+        //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
+        assertEquals(
+            "//*[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=concat('\"that',\"'\",'s mine\", he said.')]",
+            xpath {
+                descendantOrSelf / "*"("\"That's mine\", he said.")
+            }.toString()
+        )
 }
