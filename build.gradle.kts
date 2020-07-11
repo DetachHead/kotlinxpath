@@ -1,5 +1,5 @@
 plugins {
-    kotlin("multiplatform") version "1.3.72"
+    kotlin("multiplatform") version "1.4-M3"
 }
 group = "org.example"
 version = "1.0-SNAPSHOT"
