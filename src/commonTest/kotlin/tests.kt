@@ -3,24 +3,24 @@ import kotlin.test.assertEquals
 
 class test {
     @Test
-    fun test1() {
+    fun innertext() =
         assertEquals(
             "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
             xpath {
                 descendantOrSelf / "div"("id" to "thing", text = "sdfg")
             }.toString()
         )
-    }
 
     @Test
-    fun test2() {
-        assertEquals("//div/p[@class='asdf']", xpath {
-            descendantOrSelf / "div" / "p"("class" to "asdf")
-        }.toString())
-    }
+    fun child() =
+        assertEquals(
+            "//div/p[@class='asdf']", xpath {
+                descendantOrSelf / "div" / "p"("class" to "asdf")
+            }.toString()
+        )
 
     @Test
-    fun test3() {
+    fun nested() =
         assertEquals(
             "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/p[1]",
             xpath {
