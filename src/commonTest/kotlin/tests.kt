@@ -7,7 +7,7 @@ class test {
         assertEquals(
             "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
             xpath {
-                descendantOrSelf / "div"("id" to "thing", text = "sdfg")
+                descendantOrSelf / div("id" to "thing", text = "sdfg")
             }.toString()
         )
 
@@ -15,7 +15,7 @@ class test {
     fun child() =
         assertEquals(
             "//div/p[@class='asdf']", xpath {
-                descendantOrSelf / "div" / "p"("class" to "asdf")
+                descendantOrSelf / div / p("class" to "asdf")
             }.toString()
         )
 
@@ -24,7 +24,7 @@ class test {
         assertEquals(
             "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/p[1]",
             xpath {
-                descendantOrSelf / "div" { "div"("Asdf") } / "div" / "p"(1)
+                descendantOrSelf / div { div("Asdf") } / div / p(1)
             }.toString()
         )
 
@@ -34,7 +34,7 @@ class test {
         assertEquals(
             "//*[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=concat('\"that',\"'\",'s mine\", he said.')]",
             xpath {
-                descendantOrSelf / "*"("\"That's mine\", he said.")
+                anything("\"That's mine\", he said.")
             }.toString()
         )
 }
