@@ -3,14 +3,13 @@ import kotlin.test.assertEquals
 
 class test {
     @Test
-    fun innertext() {
+    fun innertext() =
         assertEquals(
             "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
             xpath {
                 descendantOrSelf / div("id" to "thing", text = "sdfg")
             }.toString()
         )
-    }
 
     @Test
     fun child() =
