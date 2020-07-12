@@ -7,7 +7,7 @@ kotlin typesafe builder for xpath
 
 ```kotlin
 println(xpath {
-    descendantOrSelf / "div"("id" to "thing", text = "sdfg")
+    descendantOrSelf / div("id" to "thing", text = "sdfg")
 })
 ```
 outputs `//div[@id='thing' and normalize-space(.)='sdfg']`
