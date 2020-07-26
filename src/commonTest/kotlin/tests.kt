@@ -37,4 +37,31 @@ class test {
                 anything("\"That's mine\", he said.")
             }.toString()
         )
+
+    @Test
+    fun innertextString() =
+        assertEquals(
+            "//asdf[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
+            xpath {
+                descendantOrSelf / "asdf"("id" to "thing", text = "sdfg")
+            }.toString()
+        )
+
+    @Test
+    fun childstring() =
+        assertEquals(
+            "//div/p[@class='asdf']",
+            xpath {
+                descendantOrSelf / "div" / "p"("class" to "asdf")
+            }.toString()
+        )
+
+    @Test
+    fun nestedstring() =
+        assertEquals(
+            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/p[1]",
+            xpath {
+                descendantOrSelf / "div" { "div"("Asdf") } / "div" / "p"(1)
+            }.toString()
+        )
 }

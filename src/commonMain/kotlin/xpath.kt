@@ -53,7 +53,7 @@ class xpath(block: xpath.() -> Unit) {
      */
     operator fun xpathcodesegment.invoke(
         vararg attributes: Pair<String, String>,
-        text: String?,
+        text: String? = null,
         block: (xpath.() -> Unit)? = null
     ): String {
         //TODO: less icky construction of attributes
@@ -77,25 +77,9 @@ class xpath(block: xpath.() -> Unit) {
     /**
      * [xpathcodesegment.invoke] overloads for invocation flexibility. this is probs cringe but idk how to do it better
      */
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION") //removing the spread operator causes runtime errors in js target
-    operator fun xpathcodesegment.invoke(vararg attributes: Pair<String, String>) =
-        invoke(attributes = *attributes, text = null, block = null)
-
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun xpathcodesegment.invoke(vararg attributes: Pair<String, String>, text: String) =
-        invoke(attributes = *attributes, text = text, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun xpathcodesegment.invoke(text: String, block: xpath.() -> Unit) =
+    operator fun xpathcodesegment.invoke(text: String, block: (xpath.() -> Unit)? = null) =
         invoke(attributes = *arrayOf(), text = text, block = block)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun xpathcodesegment.invoke(text: String) =
-        invoke(attributes = *arrayOf(), text = text, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun xpathcodesegment.invoke(block: xpath.() -> Unit) =
-        invoke(attributes = *arrayOf(), text = null, block = block)
 
     operator fun xpathcodesegment.invoke(index: Int): String = "$this[$index]"
 
@@ -106,34 +90,14 @@ class xpath(block: xpath.() -> Unit) {
     @xpathSyntaxDSL
     operator fun xpathsyntax.invoke(
         vararg attributes: Pair<String, String>,
-        text: String?,
+        text: String? = null,
         block: (xpath.() -> Unit)? = null
     ) = (this as xpathcodesegment).invoke(attributes = *attributes, text = text, block = block)
 
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     @xpathSyntaxDSL
-    operator fun xpathsyntax.invoke(vararg attributes: Pair<String, String>) =
-        invoke(attributes = *attributes, text = null, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    @xpathSyntaxDSL
-    operator fun xpathsyntax.invoke(vararg attributes: Pair<String, String>, text: String) =
-        invoke(attributes = *attributes, text = text, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    @xpathSyntaxDSL
-    operator fun xpathsyntax.invoke(text: String, block: xpath.() -> Unit) =
+    operator fun xpathsyntax.invoke(text: String, block: (xpath.() -> Unit)? = null) =
         invoke(attributes = *arrayOf(), text = text, block = block)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    @xpathSyntaxDSL
-    operator fun xpathsyntax.invoke(text: String) =
-        invoke(attributes = *arrayOf(), text = text, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    @xpathSyntaxDSL
-    operator fun xpathsyntax.invoke(block: xpath.() -> Unit) =
-        invoke(attributes = *arrayOf(), text = null, block = block)
 
     @xpathSyntaxDSL
     operator fun xpathsyntax.invoke(index: Int): String = "$this[$index]"
@@ -144,29 +108,13 @@ class xpath(block: xpath.() -> Unit) {
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(
         vararg attributes: Pair<String, String>,
-        text: String?,
+        text: String? = null,
         block: (xpath.() -> Unit)? = null
     ) = xpathcodesegment(this).invoke(attributes = *attributes, text = text, block = block)
 
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION") //removing the spread operator causes runtime errors in js target
-    operator fun String.invoke(vararg attributes: Pair<String, String>) =
-        invoke(attributes = *attributes, text = null, block = null)
-
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun String.invoke(vararg attributes: Pair<String, String>, text: String) =
-        invoke(attributes = *attributes, text = text, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun String.invoke(text: String, block: xpath.() -> Unit) =
+    operator fun String.invoke(text: String, block: (xpath.() -> Unit)? = null) =
         invoke(attributes = *arrayOf(), text = text, block = block)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun String.invoke(text: String) =
-        invoke(attributes = *arrayOf(), text = text, block = null)
-
-    @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
-    operator fun String.invoke(block: xpath.() -> Unit) =
-        invoke(attributes = *arrayOf(), text = null, block = block)
 
     operator fun String.invoke(index: Int): String = "$this[$index]"
 
