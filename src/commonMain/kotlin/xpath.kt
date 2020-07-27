@@ -4,6 +4,8 @@
 @DslMarker
 annotation class xpathSyntaxDSL
 
+typealias xpathattribute = Pair<String, String>
+
 /**
  * logical operators used for xpath attributes //TODO: implement option to specify which operator to use
  */
@@ -45,14 +47,14 @@ class xpath(block: xpath.() -> Unit) {
      * eg. `"div" / "p"``
      */
     operator fun xpathcodesegment.div(xpath: String): xpathcodesegment = appendElement(this.toString(), xpath)
-    operator fun xpathcodesegment.div(xpath: xpathcodesegment): xpathcodesegment =
-        appendElement(this.toString(), xpath.toString())
+    operator fun xpathcodesegment.div(xpath: xpathcodesegment): xpathcodesegment = this / xpath.toString()
+    operator fun xpathcodesegment.div(xpath: xpath): xpathcodesegment = this / xpath.toString()
 
     /**
      * adds an element with [attributes] to the xpath string
      */
     operator fun xpathcodesegment.invoke(
-        vararg attributes: Pair<String, String>,
+        vararg attributes: xpathattribute,
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ): String {
@@ -70,7 +72,7 @@ class xpath(block: xpath.() -> Unit) {
                     attributesMap,
                     logicalOperator.and
                 )
-            }${if (block != null) self.toString() + xpath { block() }.toString() else ""}]"
+            }${if (block != null) xpath { self / xpath { block() } }.toString() else ""}]"
         return string
     }
 
@@ -89,7 +91,7 @@ class xpath(block: xpath.() -> Unit) {
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     @xpathSyntaxDSL
     operator fun xpathsyntax.invoke(
-        vararg attributes: Pair<String, String>,
+        vararg attributes: xpathattribute,
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ) = (this as xpathcodesegment).invoke(attributes = *attributes, text = text, block = block)
@@ -107,7 +109,7 @@ class xpath(block: xpath.() -> Unit) {
      */
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(
-        vararg attributes: Pair<String, String>,
+        vararg attributes: xpathattribute,
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ) = xpathcodesegment(this).invoke(attributes = *attributes, text = text, block = block)
@@ -169,7 +171,7 @@ class xpath(block: xpath.() -> Unit) {
         xpathsyntax("//") //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
 
     @xpathSyntaxDSL
-    val self = xpathsyntax("./")
+    val self = xpathsyntax(".")
 
     @xpathSyntaxDSL
     val any = xpathsyntax("*")
