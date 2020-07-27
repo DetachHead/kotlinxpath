@@ -1,8 +1,15 @@
 /**
+ * disclaimer. this is very messy, and there's probably a lot wrong with it.
+ * this is currently just a project im working on to improve my skills, mainly because typesafe builders are really fascinating to me :)
+ */
+
+/**
  * dsl marker to differentiate xpath syntax consts (eg. //, *, ./) from element consts
  */
 @DslMarker
 annotation class xpathSyntaxDSL
+
+typealias xpathattribute = Pair<String, String>
 
 /**
  * logical operators used for xpath attributes //TODO: implement option to specify which operator to use
@@ -31,7 +38,7 @@ class xpath(block: xpath.() -> Unit) {
     }
 
     /**
-     * an xpath thingy such as //, *, ./, etc
+     * an xpath axis specifier or something like that (eg. such as //, *, ./, etc)
      */
     class xpathsyntax(value: String) : xpathcodesegment(value)
 
@@ -45,23 +52,22 @@ class xpath(block: xpath.() -> Unit) {
      * eg. `"div" / "p"``
      */
     operator fun xpathcodesegment.div(xpath: String): xpathcodesegment = appendElement(this.toString(), xpath)
-    operator fun xpathcodesegment.div(xpath: xpathcodesegment): xpathcodesegment =
-        appendElement(this.toString(), xpath.toString())
+    operator fun xpathcodesegment.div(xpath: xpathcodesegment): xpathcodesegment = this / xpath.toString()
+    operator fun xpathcodesegment.div(xpath: xpath): xpathcodesegment = this / xpath.toString()
 
     /**
      * adds an element with [attributes] to the xpath string
      */
     operator fun xpathcodesegment.invoke(
-        vararg attributes: Pair<String, String>,
+        vararg attributes: xpathattribute,
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ): String {
-        //TODO: less icky construction of attributes
-        //this constructs a [] thingy in xpath containing either attributes or other xpath expressions.
+        val attributesSet = attributes.toMutableSet()
+        //constructs a Predicate (the expression in square brackets []) in the xpath containing either attributes or other xpath expressions.
         //eg. "//a[./h3[@class='asdf'] and @href='https://blah']"
-        val attributesMap = mutableMapOf(*attributes)
-        if (text != null)
-            attributesMap["."] = text
+        if (text != null) attributesSet.add(self.toString() to text)
+        val attributesMap = attributesSet.toMap()
         //concatenates multiple attributes using the specified logical operator
         //then adds any child xpath expressions (assumes they start with self (./))
         string =
@@ -70,7 +76,7 @@ class xpath(block: xpath.() -> Unit) {
                     attributesMap,
                     logicalOperator.and
                 )
-            }${if (block != null) self.toString() + xpath { block() }.toString() else ""}]"
+            }${if (block != null) xpath { self / xpath { block() } }.toString() else ""}]"
         return string
     }
 
@@ -89,7 +95,7 @@ class xpath(block: xpath.() -> Unit) {
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     @xpathSyntaxDSL
     operator fun xpathsyntax.invoke(
-        vararg attributes: Pair<String, String>,
+        vararg attributes: xpathattribute,
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ) = (this as xpathcodesegment).invoke(attributes = *attributes, text = text, block = block)
@@ -107,7 +113,7 @@ class xpath(block: xpath.() -> Unit) {
      */
     @Suppress("REDUNDANT_SPREAD_OPERATOR_IN_NAMED_FORM_IN_FUNCTION")
     operator fun String.invoke(
-        vararg attributes: Pair<String, String>,
+        vararg attributes: xpathattribute,
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ) = xpathcodesegment(this).invoke(attributes = *attributes, text = text, block = block)
@@ -169,7 +175,7 @@ class xpath(block: xpath.() -> Unit) {
         xpathsyntax("//") //TODO: less verbose name. this is pretty common so maybe remove the need for calling it somehow, or use an operator
 
     @xpathSyntaxDSL
-    val self = xpathsyntax("./")
+    val self = xpathsyntax(".")
 
     @xpathSyntaxDSL
     val any = xpathsyntax("*")
