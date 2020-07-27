@@ -33,7 +33,7 @@ class xpath(block: xpath.() -> Unit) {
     }
 
     /**
-     * an xpath thingy such as //, *, ./, etc
+     * an xpath axis specifier or something like that (eg. such as //, *, ./, etc)
      */
     class xpathsyntax(value: String) : xpathcodesegment(value)
 
