@@ -63,12 +63,11 @@ class xpath(block: xpath.() -> Unit) {
         text: String? = null,
         block: (xpath.() -> Unit)? = null
     ): String {
-        //TODO: less icky construction of attributes
-        //this constructs a [] thingy in xpath containing either attributes or other xpath expressions.
+        val attributesSet = attributes.toMutableSet()
+        //constructs a Predicate (the expression in square brackets []) in the xpath containing either attributes or other xpath expressions.
         //eg. "//a[./h3[@class='asdf'] and @href='https://blah']"
-        val attributesMap = mutableMapOf(*attributes)
-        if (text != null)
-            attributesMap["."] = text
+        if (text != null) attributesSet.add(self.toString() to text)
+        val attributesMap = attributesSet.toMap()
         //concatenates multiple attributes using the specified logical operator
         //then adds any child xpath expressions (assumes they start with self (./))
         string =
