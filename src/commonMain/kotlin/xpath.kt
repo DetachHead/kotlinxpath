@@ -26,7 +26,7 @@ fun xpath(block: xpathbuilder.() -> Unit): Xpath = xpathbuilder().apply(block).b
  * typesafe builder for [Xpath]
  */
 class xpathbuilder {
-    var steps = mutableListOf<locationstep>()
+    val steps = mutableListOf<locationstep>()
     fun build() = Xpath(steps)
 
     /**
