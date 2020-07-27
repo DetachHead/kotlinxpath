@@ -1,4 +1,9 @@
 /**
+ * disclaimer. this is very messy, and there's probably a lot wrong with it.
+ * this is currently just a project im working on to improve my skills, mainly because typesafe builders are really fascinating to me :)
+ */
+
+/**
  * dsl marker to differentiate xpath syntax consts (eg. //, *, ./) from element consts
  */
 @DslMarker
