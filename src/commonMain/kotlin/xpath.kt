@@ -1,20 +1,14 @@
 /**
- * an xpath location step which is separated by `/`. more info [here](https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0))
+ * an xpath expression
  */
-class locationstep(
+open class Xpath(
     val axis: Axis,
     val nodetest: nodetest,
-    val predicates: List<predicate> = listOf()
+    var predicates: List<predicate> = listOf(),
+    var child: Xpath? = null
 ) {
-    override fun toString() = "$axis::$nodetest${predicates.joinToString("")}"
-}
-
-/**
- * an xpath expression made up of [locationstep]s
- */
-class Xpath(val steps: List<locationstep>) {
     //TODO: handling for scenarios where you want the xpath to start with a single /
-    override fun toString() = steps.joinToString("/")
+    override fun toString() = "$axis::$nodetest${predicates.joinToString("")}" + (child?.let { "/$it" } ?: "")
 }
 
 /**
@@ -26,22 +20,32 @@ fun xpath(block: xpathbuilder.() -> Unit): Xpath = xpathbuilder().apply(block).b
  * typesafe builder for [Xpath]
  */
 class xpathbuilder {
-    val steps = mutableListOf<locationstep>()
-    fun build() = Xpath(steps)
+    lateinit var xpath: Xpath
+    fun build() = xpath
 
     /**
-     * concatenates two [locationstep]s in xpath with the / operator
+     * adds the given [predicate]s to the current [Xpath]
      */
-    operator fun locationstep.div(other: locationstep) = steps.add(other)
+    operator fun Xpath.get(vararg predicates: String) = also {
+        this.predicates += predicates.map { predicate(it) }
+        xpath = it
+    }
 
     /**
-     * concatenates a [locationstep] with a [nodetest] in xpath with the / operator, by creating a new [locationstep] with no [predicate]s
+     * Adds an [Xpath] to the current [Xpath]
      */
-    operator fun locationstep.div(other: nodetest) = steps.add(locationstep(Axis.child, other))
+    operator fun Xpath.div(other: Xpath) = also {
+        child = other
+        xpath = it
+    }
 
     /**
-     * creates a [locationstep] with the given [Axis], [nodetest] and [predicate]s
+     * appends the given [nodetest] to the current [Xpath]
      */
-    operator fun Axis.invoke(node: nodetest, predicates: List<predicate> = listOf()) =
-        locationstep(this, node, predicates).also { steps.add(it) }
+    operator fun Xpath.div(other: nodetest) = this / Xpath(Axis.child, other)
+
+    /**
+     * creates an [Xpath] with the current [Axis] and the given [nodetest]
+     */
+    operator fun Axis.invoke(node: nodetest) = Xpath(this, node).also { xpath = it }
 }

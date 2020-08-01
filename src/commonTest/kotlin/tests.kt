@@ -5,7 +5,7 @@ class test {
     @Test
     fun rewriteTest() =
         assertEquals("descendant-or-self::div[@id=1]/child::div", xpath {
-            any(div, listOf(predicate("@id=1"))) / div
+            any(div)["@id=1"] / div
         }.toString())
 
     //TODO: make these old tests work with the new rewrite
