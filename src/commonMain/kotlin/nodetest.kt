@@ -1,5 +1,5 @@
 /**
- * an  xpath node test https://en.wikipedia.org/wiki/XPath#Node_tests
+ * an xpath node test. more info [here](https://en.wikipedia.org/wiki/XPath#Node_tests)
  */
 class nodetest(val value: String) {
     override fun toString() = value

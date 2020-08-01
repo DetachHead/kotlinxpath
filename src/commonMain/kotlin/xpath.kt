@@ -1,5 +1,5 @@
 /**
- * an xpath location step which is separated by `/`. https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0)
+ * an xpath location step which is separated by `/`. more info [here](https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0))
  */
 class locationstep(
     val axis: Axis,

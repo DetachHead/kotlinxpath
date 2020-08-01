@@ -1,5 +1,5 @@
 /**
- * xpath axes https://en.wikipedia.org/wiki/XPath#Axis_specifiers
+ * [xpath axes](https://en.wikipedia.org/wiki/XPath#Axis_specifiers)
  */
 enum class Axis {
     ancestor, `ancestor-or-self`, attribute, child, descendant, `descendant-or-self`,

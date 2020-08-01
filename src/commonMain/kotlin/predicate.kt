@@ -9,7 +9,7 @@ enum class operator(val value: String = this.toString()) {
 }
 
 /**
- * an xpath predicate https://en.wikipedia.org/wiki/XPath#Predicates
+ * an xpath predicate. more info [here](https://en.wikipedia.org/wiki/XPath#Predicates)
  */
 class predicate(val value: String) {
     //TODO: extrapolate the possible expressions in predicates
