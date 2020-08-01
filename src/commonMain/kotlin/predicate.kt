@@ -1,8 +1,25 @@
+import kotlin.js.JsName
+
 /**
  * operators used for xpath attributes
  */
 enum class operator(val value: String = this.toString()) {
-    and, or, `=`, `!=`, `+`, `-`, `*`, div, mod,
+    and, or, div, mod,
+
+    @JsName("equal")
+    `=`,
+
+    @JsName("notEqual")
+    `!=`,
+
+    @JsName("plus")
+    `+`,
+
+    @JsName("minus")
+    `-`,
+
+    @JsName("times")
+    `*`,
 
     //kotlin doesnt allow symbols with < or > in them i guess:
     less("<"), lessOrEqual("<="), greater(">"), greaterOrEqual(">=")

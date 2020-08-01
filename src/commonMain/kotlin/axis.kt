@@ -1,9 +1,22 @@
+import kotlin.js.JsName
+
 /**
  * [xpath axes](https://en.wikipedia.org/wiki/XPath#Axis_specifiers)
  */
 enum class Axis {
-    ancestor, `ancestor-or-self`, attribute, child, descendant, `descendant-or-self`,
-    following, `following-sibling`, namespace, parent, preceding, `preceding-sibling`, self
+    ancestor, attribute, child, descendant, following, namespace, parent, preceding, self,
+
+    @JsName("ancestor_or_self")
+    `ancestor-or-self`,
+
+    @JsName("descendant_or_self")
+    `descendant-or-self`,
+
+    @JsName("preceding_sibling")
+    `preceding-sibling`,
+
+    @JsName("following_sibling")
+    `following-sibling`
 }
 
 //constants for axis shortcuts:
