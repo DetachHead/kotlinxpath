@@ -45,7 +45,6 @@ kotlin {
                 implementation(kotlin("test-js"))
             }
         }
-        //TODO: get this working... mingwX64('mingw').compilations.main.defaultSourceSet { /* ... */ }
         val mingwX64Test by getting { }
     }
 }
