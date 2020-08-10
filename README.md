@@ -13,4 +13,4 @@ println(xpath {
 outputs `//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=concat('asdf"sdfg',"'",'zxcv')]`
 
 ## disclaimer
-this project is in a very early state. there's plenty of things it can't do yet
+this project is in a very early state and the current implementation is really shit. currently working on a better version in the rewrite branch
