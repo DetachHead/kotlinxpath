@@ -14,12 +14,6 @@ kotlin {
     mingwX64 {}
     sourceSets {
         @Suppress("unused_variable")
-        val commonMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-common"))
-            }
-        }
-        @Suppress("unused_variable")
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
@@ -27,21 +21,9 @@ kotlin {
             }
         }
         @Suppress("unused_variable")
-        val jvmMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-jdk8"))
-            }
-        }
-        @Suppress("unused_variable")
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
-            }
-        }
-        @Suppress("unused_variable")
-        val jsMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-js"))
             }
         }
         @Suppress("unused_variable")
