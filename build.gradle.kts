@@ -14,6 +14,7 @@ tasks.withType<KotlinCompile>().configureEach {
 }
 
 kotlin {
+    explicitApi()
     js(IR) { nodejs() }
     jvm {}
     mingwX64 {}

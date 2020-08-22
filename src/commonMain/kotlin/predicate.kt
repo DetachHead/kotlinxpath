@@ -3,7 +3,7 @@ import kotlin.js.JsName
 /**
  * operators used for xpath attributes
  */
-enum class operator(val value: String = this.toString()) {
+public enum class operator(public val value: String = this.toString()) {
     and, or, div, mod,
 
     @JsName("equal")
@@ -28,14 +28,14 @@ enum class operator(val value: String = this.toString()) {
 /**
  * an xpath predicate. more info [here](https://en.wikipedia.org/wiki/XPath#Predicates)
  */
-class predicate(val value: String) {
+public class predicate(public val value: String) {
     //TODO: extrapolate the possible expressions in predicates
-    override fun toString() = "[$value]"
+    override fun toString(): String = "[$value]"
 }
 
 /**
  * typesafe builder for [predicate]
  */
-class predicatebuilder {
+public class predicatebuilder {
     //TODO
 }
