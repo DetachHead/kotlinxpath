@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
     kotlin("multiplatform") version "1.4.0"
 }
@@ -7,8 +9,12 @@ repositories {
     mavenCentral()
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.useIR = true
+}
+
 kotlin {
-    js { nodejs() }
+    js(IR) { nodejs() }
     jvm {}
     mingwX64 {}
     sourceSets {
