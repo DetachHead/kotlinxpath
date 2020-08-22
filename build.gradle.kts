@@ -19,12 +19,14 @@ kotlin {
                 implementation(kotlin("test-annotations-common"))
             }
         }
+
         @Suppress("unused_variable")
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
             }
         }
+
         @Suppress("unused_variable")
         val jsTest by getting {
             dependencies {
@@ -32,6 +34,7 @@ kotlin {
                 implementation(kotlin("test-js"))
             }
         }
+
         @Suppress("unused_variable")
         val mingwX64Test by getting { }
     }
