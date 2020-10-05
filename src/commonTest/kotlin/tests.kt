@@ -4,9 +4,10 @@ import kotlin.test.assertEquals
 class test {
     @Test
     fun rewriteTest() =
-        assertEquals("descendant-or-self::div[@id=1]/child::div", xpath {
-            any(div)["@id=1"] / div
-        }.toString())
+        assertEquals(
+            "descendant-or-self::div[@id='1']/child::div",
+            xpath { any(div)[{ "@id" equals "1" }] / div }.toString()
+        )
 
     //TODO: make these old tests work with the new rewrite
 //    @Test

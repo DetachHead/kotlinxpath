@@ -3,8 +3,8 @@
  */
 public open class Xpath(
     public val axis: Axis,
-    public val nodetest: nodetest,
-    public var predicates: List<predicate> = listOf(),
+    public val nodetest: NodeTest,
+    public var predicates: List<Predicate> = listOf(),
     public var child: Xpath? = null
 ) {
     //TODO: handling for scenarios where you want the xpath to start with a single /
@@ -12,22 +12,22 @@ public open class Xpath(
 }
 
 /**
- * creates an [Xpath] using the [xpathbuilder] with the given [block]
+ * creates an [Xpath] using the [XpathBuilder] with the given [block]
  */
-public fun xpath(block: xpathbuilder.() -> Unit): Xpath = xpathbuilder().apply(block).build()
+public fun xpath(block: XpathBuilder.() -> Unit): Xpath = XpathBuilder().apply(block).build()
 
 /**
  * typesafe builder for [Xpath]
  */
-public class xpathbuilder {
+public class XpathBuilder: Buildable<Xpath> {
     private lateinit var xpath: Xpath
-    internal fun build(): Xpath = xpath
+    override fun build(): Xpath = xpath
 
     /**
-     * adds the given [predicate]s to the current [Xpath]
+     * adds the given [Predicate]s to the current [Xpath]
      */
-    public operator fun Xpath.get(vararg predicates: String): Xpath = also {
-        this.predicates += predicates.map { predicate(it) }
+    public operator fun Xpath.get(predicates: PredicateBuilder.() -> Unit): Xpath = also {
+        this.predicates += PredicateBuilder().apply(predicates).build()
         xpath = it
     }
 
@@ -40,12 +40,12 @@ public class xpathbuilder {
     }
 
     /**
-     * appends the given [nodetest] to the current [Xpath]
+     * appends the given [NodeTest] to the current [Xpath]
      */
-    public operator fun Xpath.div(other: nodetest): Xpath = this / Xpath(Axis.child, other)
+    public operator fun Xpath.div(other: NodeTest): Xpath = this / Xpath(Axis.child, other)
 
     /**
-     * creates an [Xpath] with the current [Axis] and the given [nodetest]
+     * creates an [Xpath] with the current [Axis] and the given [NodeTest]
      */
-    public operator fun Axis.invoke(node: nodetest): Xpath = Xpath(this, node).also { xpath = it }
+    public operator fun Axis.invoke(node: NodeTest): Xpath = Xpath(this, node).also { xpath = it }
 }
