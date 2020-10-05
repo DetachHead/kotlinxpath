@@ -101,14 +101,97 @@ public class PredicateBuilder : Buildable<Expression> {
     /*
      * [Xpath functions](https://en.wikipedia.org/wiki/XPath#Functions_and_operators)
      */
-    public fun LocationPath.compare(operator: ComparisonOperator, other: String): Expression =
-        this.toString().compare(operator, other)
+    public fun position(): Expression = functionExpression("position")
 
-    public infix fun String.equals(other: String): Expression = this.compare(ComparisonOperator.`=`, other)
-    public infix fun LocationPath.equals(other: String): Expression = this.toString() equals other
+    public fun count(nodeSet: LocationPath): Expression = functionExpression("count", listOf(nodeSet))
 
-    public infix fun String.greaterThan(other: Int): Expression =
-        this.compare(ComparisonOperator.greater, other.toString())
+    public fun string(obj: Expression? = null): Expression = functionExpression("string", listOf(obj))
+    public fun string(str: String): Expression = string(Expression(str))
+    public fun string(str: Int): Expression = string(Expression(str))
+    public fun string(str: Boolean): Expression = string(Expression(str))
 
-    public infix fun LocationPath.equals(other: Int): Expression = this.toString() greaterThan other
+    public fun concat(vararg expressions: Expression): Expression = functionExpression("concat", expressions.toList())
+    public fun concat(vararg strings: String): Expression = concat(*(strings.map { Expression(it) }.toTypedArray()))
+
+    public fun `starts-with`(first: Expression, second: Expression): Expression =
+        functionExpression("starts-with", listOf(first, second))
+
+    public fun `starts-with`(first: Expression, second: String): Expression = `starts-with`(first, Expression(second))
+    public fun `starts-with`(first: String, second: Expression): Expression = `starts-with`(Expression(first), second)
+    public fun `starts-with`(first: String, second: String): Expression =
+        `starts-with`(Expression(first), Expression(second))
+
+    public fun contains(first: Expression, second: Expression): Expression =
+        functionExpression("contains", listOf(first, second))
+
+    public fun contains(first: Expression, second: String): Expression = contains(first, Expression(second))
+    public fun contains(first: String, second: Expression): Expression = contains(Expression(first), second)
+    public fun contains(first: String, second: String): Expression = contains(Expression(first), Expression(second))
+
+    public fun substring(first: Expression, second: Expression, length: Expression? = null): Expression =
+        functionExpression("substring", listOf(first, second, length))
+
+    public fun substring(first: Expression, second: String, length: Expression? = null): Expression =
+        substring(first, Expression(second), length)
+
+    public fun substring(first: String, second: Expression, length: Expression? = null): Expression =
+        substring(Expression(first), second, length)
+
+    public fun substring(first: String, second: String, length: Expression? = null): Expression =
+        substring(Expression(first), Expression(second), length)
+
+    public fun substring(first: Expression, second: Expression, length: Int): Expression =
+        substring(first, second, Expression(length))
+
+    public fun substring(first: Expression, second: String, length: Int): Expression =
+        substring(first, Expression(second), Expression(length))
+
+    public fun substring(first: String, second: Expression, length: Int): Expression =
+        substring(Expression(first), second, Expression(length))
+
+    public fun substring(first: String, second: String, length: Int): Expression =
+        substring(Expression(first), Expression(second), Expression(length))
+
+    public fun `substring-before`(first: Expression, second: Expression): Expression =
+        functionExpression("substring-before", listOf(first, second))
+
+    public fun `substring-before`(first: Expression, second: String): Expression =
+        `substring-before`(first, Expression(second))
+
+    public fun `substring-before`(first: String, second: Expression): Expression =
+        `substring-before`(Expression(first), second)
+
+    public fun `substring-before`(first: String, second: String): Expression =
+        `substring-before`(Expression(first), Expression(second))
+
+    public fun `substring-after`(first: Expression, second: Expression): Expression =
+        functionExpression("substring-after", listOf(first, second))
+
+    public fun `substring-after`(first: Expression, second: String): Expression =
+        `substring-before`(first, Expression(second))
+
+    public fun `substring-after`(first: String, second: Expression): Expression =
+        `substring-before`(Expression(first), second)
+
+    public fun `substring-after`(first: String, second: String): Expression =
+        `substring-before`(Expression(first), Expression(second))
+
+    public fun `string-length`(expression: Expression? = null): Expression =
+        functionExpression("string-length", listOf(expression))
+
+    public fun `string-length`(string: String): Expression = `string-length`(Expression(string))
+
+    public fun `normalize-space`(expression: Expression? = null): Expression =
+        functionExpression("normalize-space", listOf(expression))
+
+    public fun `normalize-space`(string: String): Expression = `normalize-space`(Expression(string))
+
+    public fun not(expression: Expression): Expression = functionExpression("not", listOf(expression))
+    public fun not(bool: Boolean): Expression = not(Expression(bool))
+
+    public fun `true`(): Expression = functionExpression("true")
+
+    public fun `false`(): Expression = functionExpression("true")
+
+    public fun sum(nodeSet: LocationPath): Expression = functionExpression("true", listOf(nodeSet))
 }
