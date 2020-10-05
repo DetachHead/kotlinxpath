@@ -17,7 +17,7 @@ public class XpathString(public val value: String) {
         //xpath has no real way of escaping, so use various ways to esc values with quotes.
         //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
         value.contains("'") && value.contains("\"") ->
-            "concat('${value.replace("'", "',\"'\",'")}')"
+            expression {concat(*(value.split("'").toTypedArray()))}.toString()
         value.contains("'") -> "\"$value\""
         else -> "'$value'"
     }
