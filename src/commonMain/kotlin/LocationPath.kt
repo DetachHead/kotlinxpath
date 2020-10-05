@@ -48,11 +48,9 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     }
 
     /**
-     * shortcut for a [PredicateBuilder.position] predicate
+     * shortcut for a [ExpressionBuilder.position] predicate
      */
-    public operator fun LocationPath.get(index: Int): LocationPath = also {
-        this@LocationPathBuilder.predicates += this[{ position() equal index.toString() }]
-    }
+    public operator fun LocationPath.get(index: Int): LocationPath = this[{ position() equal index.toString() }]
 
     /**
      * Adds a [LocationPath] to the current [LocationPath]

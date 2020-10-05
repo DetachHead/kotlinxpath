@@ -9,9 +9,10 @@ class test {
             xpath { any(div)[{ attr("id") equal "1" }] / div }.toString()
         )
 
+    @Test
     fun indexTest() =
         assertEquals(
-            "descendant-or-self::div[1]", xpath { any(div)[1] }.toString()
+            "descendant-or-self::div[position() = '1']", xpath { any(div)[1] }.toString()
         )
 
     //TODO: make these old tests work with the new rewrite
