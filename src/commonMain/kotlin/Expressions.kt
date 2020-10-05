@@ -1,3 +1,5 @@
+import kotlin.js.JsName
+
 /**
  * any valid Xpath expression, not necessarily a [LocationPath]
  */
@@ -113,11 +115,15 @@ public class PredicateBuilder : Buildable<Expression> {
     public fun concat(vararg expressions: Expression): Expression = functionExpression("concat", expressions.toList())
     public fun concat(vararg strings: String): Expression = concat(*(strings.map { Expression(it) }.toTypedArray()))
 
+    @JsName("starts_with")
     public fun `starts-with`(first: Expression, second: Expression): Expression =
         functionExpression("starts-with", listOf(first, second))
 
+    @JsName("starts_with2")
     public fun `starts-with`(first: Expression, second: String): Expression = `starts-with`(first, Expression(second))
+    @JsName("starts_with3")
     public fun `starts-with`(first: String, second: Expression): Expression = `starts-with`(Expression(first), second)
+    @JsName("starts_with4")
     public fun `starts-with`(first: String, second: String): Expression =
         `starts-with`(Expression(first), Expression(second))
 
@@ -152,45 +158,59 @@ public class PredicateBuilder : Buildable<Expression> {
     public fun substring(first: String, second: String, length: Int): Expression =
         substring(Expression(first), Expression(second), Expression(length))
 
+    @JsName("substring_before")
     public fun `substring-before`(first: Expression, second: Expression): Expression =
         functionExpression("substring-before", listOf(first, second))
 
+    @JsName("substring_before2")
     public fun `substring-before`(first: Expression, second: String): Expression =
         `substring-before`(first, Expression(second))
 
+    @JsName("substring_before3")
     public fun `substring-before`(first: String, second: Expression): Expression =
         `substring-before`(Expression(first), second)
 
+    @JsName("substring_before4")
     public fun `substring-before`(first: String, second: String): Expression =
         `substring-before`(Expression(first), Expression(second))
 
+    @JsName("substring_after")
     public fun `substring-after`(first: Expression, second: Expression): Expression =
         functionExpression("substring-after", listOf(first, second))
 
+    @JsName("substring_after2")
     public fun `substring-after`(first: Expression, second: String): Expression =
         `substring-before`(first, Expression(second))
 
+    @JsName("substring_after3")
     public fun `substring-after`(first: String, second: Expression): Expression =
         `substring-before`(Expression(first), second)
 
+    @JsName("substring_after4")
     public fun `substring-after`(first: String, second: String): Expression =
         `substring-before`(Expression(first), Expression(second))
 
+    @JsName("string_length")
     public fun `string-length`(expression: Expression? = null): Expression =
         functionExpression("string-length", listOf(expression))
 
+    @JsName("string_length2")
     public fun `string-length`(string: String): Expression = `string-length`(Expression(string))
 
+    @JsName("normalize_space")
     public fun `normalize-space`(expression: Expression? = null): Expression =
         functionExpression("normalize-space", listOf(expression))
 
+    @JsName("normalize_space2")
     public fun `normalize-space`(string: String): Expression = `normalize-space`(Expression(string))
 
     public fun not(expression: Expression): Expression = functionExpression("not", listOf(expression))
     public fun not(bool: Boolean): Expression = not(Expression(bool))
 
+    @JsName("_true")
     public fun `true`(): Expression = functionExpression("true")
 
+    @JsName("_false")
     public fun `false`(): Expression = functionExpression("true")
 
     public fun sum(nodeSet: LocationPath): Expression = functionExpression("true", listOf(nodeSet))
