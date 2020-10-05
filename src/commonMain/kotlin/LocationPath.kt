@@ -43,8 +43,8 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     /**
      * adds the given [Expression]s to the current [LocationPath]
      */
-    public operator fun LocationPath.get(predicates: PredicateBuilder.() -> Unit): LocationPath = also {
-        this@LocationPathBuilder.predicates += PredicateBuilder().apply(predicates).build()
+    public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = also {
+        this@LocationPathBuilder.predicates += expression(predicates)
     }
 
     /**

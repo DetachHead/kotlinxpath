@@ -32,16 +32,22 @@ private fun functionExpression(name: String, args: List<Expression?> = listOf())
     Expression("$name(${args.filterNotNull().joinToString(",")})")
 
 /**
+ * creates an [Expression] using the [ExpressionBuilder] with the given [block]
+ * to build an actual xpath ([LocationPath]), use [xpath] instead
+ */
+public fun expression(block: ExpressionBuilder.() -> Unit): Expression = ExpressionBuilder().apply(block).build()
+
+/**
  * typesafe builder for [Expression] for use as [predicates](https://en.wikipedia.org/wiki/XPath#Predicates)
  */
-public class PredicateBuilder : Buildable<Expression> {
-    private lateinit var predicate: Expression
-    override fun build(): Expression = predicate
+public class ExpressionBuilder : Buildable<Expression> {
+    private lateinit var expression: Expression
+    override fun build(): Expression = expression
 
     private fun Expression.operator(
         operator: Operator,
         other: Expression
-    ): Expression = operatorExpression(this, operator, other).also { predicate = it }
+    ): Expression = operatorExpression(this, operator, other).also { expression = it }
 
     /* Xpath operators */
     //=:
