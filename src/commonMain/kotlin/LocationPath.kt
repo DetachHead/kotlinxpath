@@ -22,6 +22,15 @@ public val foo: String = ""
 public fun xpath(block: LocationPathBuilder.() -> Unit): LocationPath = LocationPathBuilder().apply(block).build()
 
 /**
+ * creates a [LocationPath] representing the given attribute name
+ * eg.
+ * ```kotlin
+ * attr("foo").toString() == "@foo"
+ * ```
+ */
+public fun attr(name: String): LocationPath = xpath { attribute(name) }
+
+/**
  * typesafe builder for [LocationPath]
  */
 public class LocationPathBuilder : Buildable<LocationPath> {
