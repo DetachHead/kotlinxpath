@@ -3,7 +3,7 @@ import kotlin.test.assertEquals
 
 class test {
     @Test
-    fun rewriteTest() =
+    fun attributeAndChild() =
         assertEquals(
             "descendant-or-self::div[attribute::id = '1']/child::div",
             xpath { any(div)[{ attr("id") equal "1" }] / div }.toString()
