@@ -1,7 +1,7 @@
 import kotlin.js.JsName
 
 /**
- * operators used in xpath [Predicate]s
+ * operators used in xpath [Expression]s
  */
 public interface Operator
 

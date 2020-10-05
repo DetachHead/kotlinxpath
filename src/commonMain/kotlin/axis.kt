@@ -20,7 +20,7 @@ public enum class Axis {
 }
 
 //constants for axis shortcuts:
-public val XpathBuilder.any: Axis get() = Axis.`descendant-or-self`
-public val XpathBuilder.attribute: Axis get() = Axis.attribute
-public val XpathBuilder.parent: Axis get() = Axis.parent
-public val XpathBuilder.self: Axis get() = Axis.self
+public val LocationPathBuilder.any: Axis get() = Axis.`descendant-or-self`
+public val LocationPathBuilder.attribute: Axis get() = Axis.attribute
+public val LocationPathBuilder.parent: Axis get() = Axis.parent
+public val LocationPathBuilder.self: Axis get() = Axis.self
