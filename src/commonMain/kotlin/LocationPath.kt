@@ -57,4 +57,9 @@ public class LocationPathBuilder : Buildable<LocationPath> {
         axis = this
         nodetest = it.nodetest
     }
+
+    /**
+     * creates a [LocationPath] with the current [Axis] and the given [String] as a new [NodeTest]
+     */
+    public operator fun Axis.invoke(node: String): LocationPath = this(NodeTest(node))
 }
