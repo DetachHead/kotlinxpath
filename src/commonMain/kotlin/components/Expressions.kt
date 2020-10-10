@@ -12,6 +12,11 @@ public open class Expression(public val value: String) {
     public constructor(value: Int) : this(value.toString())
 
     override fun toString(): String = value
+
+    public companion object {
+        /** creates an [Expression] from the given [String], using [XpathString] */
+        public fun fromString(string: String): Expression = Expression(XpathString(string))
+    }
 }
 
 /** a string represented in an xpath [Expression]. automatically handles escaping quote characters */

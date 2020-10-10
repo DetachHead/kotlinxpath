@@ -18,15 +18,15 @@ public fun ExpressionBuilder.position(): Expression = functionExpression("positi
 public fun ExpressionBuilder.count(nodeSet: LocationPath): Expression = functionExpression("count", listOf(nodeSet))
 
 public fun ExpressionBuilder.string(obj: Expression? = null): Expression = functionExpression("string", listOf(obj))
-public fun ExpressionBuilder.string(str: String): Expression = string(Expression(str))
-public fun ExpressionBuilder.string(str: Int): Expression = string(Expression(str))
-public fun ExpressionBuilder.string(str: Boolean): Expression = string(Expression(str))
+public fun ExpressionBuilder.string(str: String): Expression = string(Expression.fromString(str))
+public fun ExpressionBuilder.string(int: Int): Expression = string(Expression(int))
+public fun ExpressionBuilder.string(boolean: Boolean): Expression = string(Expression(boolean))
 
 public fun ExpressionBuilder.concat(vararg expressions: Expression): Expression =
     functionExpression("concat", expressions.toList())
 
 public fun ExpressionBuilder.concat(vararg strings: String): Expression =
-    concat(*(strings.map { Expression(it) }.toTypedArray()))
+    concat(*(strings.map { Expression.fromString(it) }.toTypedArray()))
 
 @JsName("starts_with")
 public fun ExpressionBuilder.`starts-with`(first: Expression, second: Expression): Expression =
@@ -34,75 +34,75 @@ public fun ExpressionBuilder.`starts-with`(first: Expression, second: Expression
 
 @JsName("starts_with2")
 public fun ExpressionBuilder.`starts-with`(first: Expression, second: String): Expression =
-    `starts-with`(first, Expression(second))
+    `starts-with`(first, Expression.fromString(second))
 
 @JsName("starts_with3")
 public fun ExpressionBuilder.`starts-with`(first: String, second: Expression): Expression =
-    `starts-with`(Expression(first), second)
+    `starts-with`(Expression.fromString(first), second)
 
 @JsName("starts_with4")
 public fun ExpressionBuilder.`starts-with`(first: String, second: String): Expression =
-    `starts-with`(Expression(first), Expression(second))
+    `starts-with`(Expression.fromString(first), Expression.fromString(second))
 
 public fun ExpressionBuilder.translate(string: Expression, from: Expression, to: Expression): Expression =
     functionExpression("translate", listOf(string, from, to))
 
 public fun ExpressionBuilder.translate(string: Expression, from: Expression, to: String): Expression =
-    translate(string, from, Expression(to))
+    translate(string, from, Expression.fromString(to))
 
 public fun ExpressionBuilder.translate(string: Expression, from: String, to: Expression): Expression =
-    translate(string, Expression(from), to)
+    translate(string, Expression.fromString(from), to)
 
 public fun ExpressionBuilder.translate(string: Expression, from: String, to: String): Expression =
-    translate(string, Expression(from), Expression(to))
+    translate(string, Expression.fromString(from), Expression.fromString(to))
 
 public fun ExpressionBuilder.translate(string: String, from: Expression, to: Expression): Expression =
-    translate(Expression(string), from, to)
+    translate(Expression.fromString(string), from, to)
 
 public fun ExpressionBuilder.translate(string: String, from: Expression, to: String): Expression =
-    translate(string, from, Expression(to))
+    translate(string, from, Expression.fromString(to))
 
 public fun ExpressionBuilder.translate(string: String, from: String, to: Expression): Expression =
-    translate(string, Expression(from), to)
+    translate(string, Expression.fromString(from), to)
 
 public fun ExpressionBuilder.translate(string: String, from: String, to: String): Expression =
-    translate(string, Expression(from), Expression(to))
+    translate(string, Expression.fromString(from), Expression.fromString(to))
 
 public fun ExpressionBuilder.contains(first: Expression, second: Expression): Expression =
     functionExpression("contains", listOf(first, second))
 
 public fun ExpressionBuilder.contains(first: Expression, second: String): Expression =
-    contains(first, Expression(second))
+    contains(first, Expression.fromString(second))
 
 public fun ExpressionBuilder.contains(first: String, second: Expression): Expression =
-    contains(Expression(first), second)
+    contains(Expression.fromString(first), second)
 
 public fun ExpressionBuilder.contains(first: String, second: String): Expression =
-    contains(Expression(first), Expression(second))
+    contains(Expression.fromString(first), Expression.fromString(second))
 
 public fun ExpressionBuilder.substring(first: Expression, second: Expression, length: Expression? = null): Expression =
     functionExpression("substring", listOf(first, second, length))
 
 public fun ExpressionBuilder.substring(first: Expression, second: String, length: Expression? = null): Expression =
-    substring(first, Expression(second), length)
+    substring(first, Expression.fromString(second), length)
 
 public fun ExpressionBuilder.substring(first: String, second: Expression, length: Expression? = null): Expression =
-    substring(Expression(first), second, length)
+    substring(Expression.fromString(first), second, length)
 
 public fun ExpressionBuilder.substring(first: String, second: String, length: Expression? = null): Expression =
-    substring(Expression(first), Expression(second), length)
+    substring(Expression.fromString(first), Expression(second), length)
 
 public fun ExpressionBuilder.substring(first: Expression, second: Expression, length: Int): Expression =
     substring(first, second, Expression(length))
 
 public fun ExpressionBuilder.substring(first: Expression, second: String, length: Int): Expression =
-    substring(first, Expression(second), Expression(length))
+    substring(first, Expression.fromString(second), Expression(length))
 
 public fun ExpressionBuilder.substring(first: String, second: Expression, length: Int): Expression =
-    substring(Expression(first), second, Expression(length))
+    substring(Expression.fromString(first), second, Expression(length))
 
 public fun ExpressionBuilder.substring(first: String, second: String, length: Int): Expression =
-    substring(Expression(first), Expression(second), Expression(length))
+    substring(Expression.fromString(first), Expression.fromString(second), Expression(length))
 
 @JsName("substring_before")
 public fun ExpressionBuilder.`substring-before`(first: Expression, second: Expression): Expression =
@@ -110,15 +110,15 @@ public fun ExpressionBuilder.`substring-before`(first: Expression, second: Expre
 
 @JsName("substring_before2")
 public fun ExpressionBuilder.`substring-before`(first: Expression, second: String): Expression =
-    `substring-before`(first, Expression(second))
+    `substring-before`(first, Expression.fromString(second))
 
 @JsName("substring_before3")
 public fun ExpressionBuilder.`substring-before`(first: String, second: Expression): Expression =
-    `substring-before`(Expression(first), second)
+    `substring-before`(Expression.fromString(first), second)
 
 @JsName("substring_before4")
 public fun ExpressionBuilder.`substring-before`(first: String, second: String): Expression =
-    `substring-before`(Expression(first), Expression(second))
+    `substring-before`(Expression.fromString(first), Expression.fromString(second))
 
 @JsName("substring_after")
 public fun ExpressionBuilder.`substring-after`(first: Expression, second: Expression): Expression =
@@ -126,22 +126,23 @@ public fun ExpressionBuilder.`substring-after`(first: Expression, second: Expres
 
 @JsName("substring_after2")
 public fun ExpressionBuilder.`substring-after`(first: Expression, second: String): Expression =
-    `substring-before`(first, Expression(second))
+    `substring-before`(first, Expression.fromString(second))
 
 @JsName("substring_after3")
 public fun ExpressionBuilder.`substring-after`(first: String, second: Expression): Expression =
-    `substring-before`(Expression(first), second)
+    `substring-before`(Expression.fromString(first), second)
 
 @JsName("substring_after4")
 public fun ExpressionBuilder.`substring-after`(first: String, second: String): Expression =
-    `substring-before`(Expression(first), Expression(second))
+    `substring-before`(Expression.fromString(first), Expression.fromString(second))
 
 @JsName("string_length")
 public fun ExpressionBuilder.`string-length`(expression: Expression? = null): Expression =
     functionExpression("string-length", listOf(expression))
 
 @JsName("string_length2")
-public fun ExpressionBuilder.`string-length`(string: String): Expression = `string-length`(Expression(string))
+public fun ExpressionBuilder.`string-length`(string: String): Expression =
+    `string-length`(Expression.fromString(string))
 
 @JsName("normalize_space")
 public fun ExpressionBuilder.`normalize-space`(expression: Expression? = null): Expression =
