@@ -17,7 +17,7 @@ public class XpathString(public val value: String) {
         //xpath has no real way of escaping, so use various ways to esc values with quotes.
         //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
         value.contains("'") && value.contains("\"") ->
-            expression {concat(*(value.split("'").toTypedArray()))}.toString()
+            expression { concat(*(value.split("'").toTypedArray())) }.toString()
         value.contains("'") -> "\"$value\""
         else -> "'$value'"
     }
@@ -127,8 +127,10 @@ public class ExpressionBuilder : Buildable<Expression> {
 
     @JsName("starts_with2")
     public fun `starts-with`(first: Expression, second: String): Expression = `starts-with`(first, Expression(second))
+
     @JsName("starts_with3")
     public fun `starts-with`(first: String, second: Expression): Expression = `starts-with`(Expression(first), second)
+
     @JsName("starts_with4")
     public fun `starts-with`(first: String, second: String): Expression =
         `starts-with`(Expression(first), Expression(second))
