@@ -1,4 +1,3 @@
-
 import components.LocationPathBuilder
 import kotlin.js.JsName
 import kotlin.reflect.KProperty
@@ -10,15 +9,18 @@ public open class NodeTest(public open val value: String) {
     override fun toString(): String = value
 }
 
+/** creates a [NodeTest] using the name of the property */
 private class NodeTestDelegate {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): NodeTest = NodeTest(property.name)
 }
 
-public class NodeTestFunction(public override val value: String) : NodeTest("$value()")
+/** creates a [NodeTest] that's a function call (appends `()` to the end of it) */
+private fun nodeTestFunction(value: String) = NodeTest("$value()")
 
+/** creates a [NodeTest] function with [nodeTestFunction] using the name of the property */
 private class NodeTestFunctionDelegate {
-    operator fun getValue(thisRef: Any?, property: KProperty<*>): () -> NodeTestFunction =
-        { NodeTestFunction(property.name) }
+    operator fun getValue(thisRef: Any?, property: KProperty<*>): () -> NodeTest =
+        { nodeTestFunction(property.name) }
 }
 
 //constants for HTML node tests (https://developer.mozilla.org/en-US/docs/Web/HTML/Element):
@@ -167,9 +169,9 @@ public val LocationPathBuilder.tt: NodeTest by NodeTestDelegate()
 public val LocationPathBuilder.xmp: NodeTest by NodeTestDelegate()
 
 //node test functions
-public val LocationPathBuilder.comment: () -> NodeTestFunction by NodeTestFunctionDelegate()
-public val LocationPathBuilder.text: () -> NodeTestFunction by NodeTestFunctionDelegate()
+public val LocationPathBuilder.comment: () -> NodeTest by NodeTestFunctionDelegate()
+public val LocationPathBuilder.text: () -> NodeTest by NodeTestFunctionDelegate()
 
-@JsName("processing_instruction")
-public fun LocationPathBuilder.`processing-instruction`(): NodeTestFunction = NodeTestFunction("processing-instruction")
-public val LocationPathBuilder.node: () -> NodeTestFunction by NodeTestFunctionDelegate()
+@JsName("processing_instruction") //JsName is banned on properties for some reason
+public fun LocationPathBuilder.`processing-instruction`(): NodeTest = nodeTestFunction("processing-instruction")
+public val LocationPathBuilder.node: () -> NodeTest by NodeTestFunctionDelegate()
