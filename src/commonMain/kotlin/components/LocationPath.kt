@@ -2,7 +2,7 @@ package components
 
 import Buildable
 import NodeTest
-import functions.functions.position
+import functions.position
 
 /**
  * an xpath [location path](https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0))

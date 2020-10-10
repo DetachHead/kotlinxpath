@@ -2,7 +2,7 @@ package functions.xpath1_shims
 
 import components.Expression
 import components.ExpressionBuilder
-import functions.functions.translate
+import functions.translate
 import kotlin.js.JsName
 
 /*

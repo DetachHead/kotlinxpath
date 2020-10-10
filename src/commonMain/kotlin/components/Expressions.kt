@@ -1,7 +1,7 @@
 package components
 
 import Buildable
-import functions.functions.concat
+import functions.concat
 
 /**
  * any valid Xpath components.expression, not necessarily a [LocationPath]

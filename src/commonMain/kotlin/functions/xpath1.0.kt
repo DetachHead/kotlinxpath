@@ -1,4 +1,4 @@
-package functions.functions
+package functions
 
 import components.Expression
 import components.ExpressionBuilder

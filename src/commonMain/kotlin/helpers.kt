@@ -1,9 +1,9 @@
 import components.Expression
 import components.LocationPathBuilder
 import components.expression
-import functions.functions.`normalize-space`
-import functions.functions.concat
-import functions.functions.contains
+import functions.`normalize-space`
+import functions.concat
+import functions.contains
 import functions.xpath1_shims.`lower-case`
 
 /*
