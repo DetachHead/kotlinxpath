@@ -51,6 +51,11 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     public operator fun LocationPath.div(other: NodeTest): LocationPath = this / LocationPath(Axis.child, other)
 
     /**
+     * appends the given [NodeTest] to the current [LocationPath]
+     */
+    public operator fun LocationPath.invoke(other: NodeTest): LocationPath = this / other
+
+    /**
      * creates a [LocationPath] with the current [Axis] and the given [NodeTest]
      */
     public operator fun Axis.invoke(node: NodeTest): LocationPath = LocationPath(this, node).also {
