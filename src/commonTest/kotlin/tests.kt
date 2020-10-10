@@ -5,7 +5,7 @@ class test {
     @Test
     fun attributeAndChild() =
         assertEquals(
-            "descendant-or-self::div[attribute::id = '1']/child::div",
+            "descendant-or-self::node()/div[attribute::id = '1']/child::div",
             xpath { any(div)[{ attr("id") equal "1" }] / div }.toString()
         )
 

@@ -22,15 +22,6 @@ public val foo: String = ""
 public fun xpath(block: LocationPathBuilder.() -> Unit): LocationPath = LocationPathBuilder().apply(block).build()
 
 /**
- * creates a [LocationPath] representing the given attribute name
- * eg.
- * ```kotlin
- * attr("foo").toString() == "@foo"
- * ```
- */
-public fun attr(name: String): LocationPath = xpath { attribute(name) }
-
-/**
  * typesafe builder for [LocationPath]
  */
 public class LocationPathBuilder : Buildable<LocationPath> {
@@ -46,11 +37,6 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = also {
         this@LocationPathBuilder.predicates += expression(predicates)
     }
-
-    /**
-     * shortcut for a [ExpressionBuilder.position] predicate
-     */
-    public operator fun LocationPath.get(index: Int): LocationPath = this[{ position() equal index.toString() }]
 
     /**
      * Adds a [LocationPath] to the current [LocationPath]
@@ -76,4 +62,10 @@ public class LocationPathBuilder : Buildable<LocationPath> {
      * creates a [LocationPath] with the current [Axis] and the given [String] as a new [NodeTest]
      */
     public operator fun Axis.invoke(node: String): LocationPath = this(NodeTest(node))
+
+    /**
+     * shortcut for an [ExpressionBuilder.position] predicate
+     */
+    //TODO: figure out how to separate this like the rest of the shortcuts (see shortcuts.kt)
+    public operator fun LocationPath.get(index: Int): LocationPath = this[{ position() equal index.toString() }]
 }

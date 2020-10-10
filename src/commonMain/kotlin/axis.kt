@@ -18,9 +18,3 @@ public enum class Axis {
     @JsName("following_sibling")
     `following-sibling`
 }
-
-//constants for axis shortcuts:
-public val LocationPathBuilder.any: Axis get() = Axis.`descendant-or-self`
-public val LocationPathBuilder.attribute: Axis get() = Axis.attribute
-public val LocationPathBuilder.parent: Axis get() = Axis.parent
-public val LocationPathBuilder.self: Axis get() = Axis.self
