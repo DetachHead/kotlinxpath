@@ -12,7 +12,7 @@ useful helper functions unique to this library to help make xpath less of a pain
 
 /** compares text case-insensitively and trims whitespace */
 public fun LocationPathBuilder.textIs(text: String): Expression =
-    expression { `lower-case`(`normalize-space`(text)) equal text }
+    expression { `lower-case`(`normalize-space`(self(node()))) equal text }
 
 /** checks whether the element has the given [className] */
 public fun LocationPathBuilder.classContains(className: String): Expression =
