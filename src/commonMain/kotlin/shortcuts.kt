@@ -1,7 +1,7 @@
 import components.*
 
 /*
-functions for the shortcut syntax's made available in Xpath
+functions for the various shortcuts that are available in Xpath
  */
 
 /**
