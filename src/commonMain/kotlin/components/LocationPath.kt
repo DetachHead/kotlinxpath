@@ -36,19 +36,46 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     private var predicates: Set<Expression> = setOf()
     private var child: LocationPath? = null
     override fun build(): LocationPath = LocationPath(axis, nodetest, predicates, child)
+    private var initialized = false
+
+    /**
+     * initializes the current [LocationPathBuilder] with an existing [LocationPath] extension functions.
+     *
+     * must be called by any of the extension functions in here if the first expression in the LocationPathBuilder is
+     * another [LocationPath]
+     */
+    private fun LocationPath.initializeBuilder() {
+        if (initialized) return
+        this@LocationPathBuilder.axis = axis
+        this@LocationPathBuilder.nodetest = nodetest
+        this@LocationPathBuilder.predicates = predicates
+        this@LocationPathBuilder.child = child
+        initialized = true
+    }
 
     /**
      * adds the given [Expression]components.getS to the current [LocationPath]
      */
     public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = also {
-        this@LocationPathBuilder.predicates += expression(predicates)
+        initializeBuilder()
+        //if theres a child LocationPath, add the predicate to that instead.
+        //do this recursively so the predicate is added to the last LocationPath
+        //TODO: figure out a better method. this is pretty cringe
+        if (this@LocationPathBuilder.child == null)
+            this@LocationPathBuilder.predicates += expression(predicates)
+        else
+            this@LocationPathBuilder.child = xpath { this@LocationPathBuilder.child!![predicates] }
     }
 
     /**
      * Adds a [LocationPath] to the current [LocationPath]
      */
     public operator fun LocationPath.div(other: LocationPath): LocationPath = also {
-        this@LocationPathBuilder.child = other
+        initializeBuilder()
+        if (this@LocationPathBuilder.child == null)
+            this@LocationPathBuilder.child = other
+        else
+            this@LocationPathBuilder.child = xpath { this@LocationPathBuilder.child!! / other }
     }
 
     /**
@@ -59,7 +86,10 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     /**
      * appends the given [NodeTest] to the current [LocationPath]
      */
-    public operator fun LocationPath.invoke(other: NodeTest): LocationPath = this / other
+    public operator fun LocationPath.invoke(other: NodeTest): LocationPath {
+        initializeBuilder()
+        return this / other
+    }
 
     /**
      * creates a [LocationPath] with the current [Axis] and the given [NodeTest]
