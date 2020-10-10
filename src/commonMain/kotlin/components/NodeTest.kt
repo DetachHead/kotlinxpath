@@ -166,5 +166,7 @@ public val LocationPathBuilder.xmp: NodeTest by NodeTestDelegate()
 //node test functions
 public val LocationPathBuilder.comment: () -> NodeTestFunction by NodeTestFunctionDelegate()
 public val LocationPathBuilder.text: () -> NodeTestFunction by NodeTestFunctionDelegate()
-public val LocationPathBuilder.`processing-instruction`: () -> NodeTestFunction by NodeTestFunctionDelegate()
+
+@JsName("processing_instruction")
+public fun LocationPathBuilder.`processing-instruction`(): NodeTestFunction = NodeTestFunction("processing-instruction")
 public val LocationPathBuilder.node: () -> NodeTestFunction by NodeTestFunctionDelegate()

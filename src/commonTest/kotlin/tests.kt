@@ -1,3 +1,5 @@
+import components.div
+import components.xpath
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -16,29 +18,29 @@ class test {
         )
 
     //TODO: make these old tests work with the new rewrite
-//    @Test
-//    fun innertext() =
-//        assertEquals(
-//            "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
-//            xpath {
-//                descendantOrSelf / div("id" to "thing", text = "sdfg")
-//            }.toString()
-//        )
+    @Test
+    fun innertext() =
+        assertEquals(
+            "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
+            xpath {
+                any(div)[{attr("id") equal "thing" and textIs("sdfg")}]
+            }.toString()
+        )
 //
 //    @Test
 //    fun child() =
 //        assertEquals(
-//            "//div/p[@class='asdf']", xpath {
-//                descendantOrSelf / div / p("class" to "asdf")
+//            "//div/components.getP[@class='asdf']", xpath {
+//                descendantOrSelf / div / components.getP("class" to "asdf")
 //            }.toString()
 //        )
 //
 //    @Test
 //    fun nested() =
 //        assertEquals(
-//            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/p[1]",
+//            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/components.getP[1]",
 //            xpath {
-//                descendantOrSelf / div { div("Asdf") } / div / p(1)
+//                descendantOrSelf / div { div("Asdf") } / div / components.getP(1)
 //            }.toString()
 //        )
 //
@@ -46,9 +48,9 @@ class test {
 //    fun escapequotes() =
 //        //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
 //        assertEquals(
-//            "//*[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=concat('\"that',\"'\",'s mine\", he said.')]",
+//            "//*[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=concat('\"that',\"'\",'components.getS mine\", he said.')]",
 //            xpath {
-//                anything("\"That's mine\", he said.")
+//                anything("\"That'components.getS mine\", he said.")
 //            }.toString()
 //        )
 //
@@ -64,18 +66,18 @@ class test {
 //    @Test
 //    fun childstring() =
 //        assertEquals(
-//            "//div/p[@class='asdf']",
+//            "//div/components.getP[@class='asdf']",
 //            xpath {
-//                descendantOrSelf / "div" / "p"("class" to "asdf")
+//                descendantOrSelf / "div" / "components.getP"("class" to "asdf")
 //            }.toString()
 //        )
 //
 //    @Test
 //    fun nestedstring() =
 //        assertEquals(
-//            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/p[1]",
+//            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/components.getP[1]",
 //            xpath {
-//                descendantOrSelf / "div" { "div"("Asdf") } / "div" / "p"(1)
+//                descendantOrSelf / "div" { "div"("Asdf") } / "div" / "components.getP"(1)
 //            }.toString()
 //        )
 }

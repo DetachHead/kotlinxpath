@@ -1,3 +1,8 @@
+package components
+
+import Buildable
+import functions.functions.position
+
 /**
  * an xpath [location path](https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0))
  */
@@ -32,7 +37,7 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     override fun build(): LocationPath = LocationPath(axis, nodetest, predicates, child)
 
     /**
-     * adds the given [Expression]s to the current [LocationPath]
+     * adds the given [Expression]components.getS to the current [LocationPath]
      */
     public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = also {
         this@LocationPathBuilder.predicates += expression(predicates)
@@ -71,6 +76,6 @@ public class LocationPathBuilder : Buildable<LocationPath> {
     /**
      * shortcut for an [ExpressionBuilder.position] predicate
      */
-    //TODO: figure out how to separate this like the rest of the shortcuts (see shortcuts.kt)
+    //TODO: components.getFigure out how to separate this like the rest of the shortcuts (see shortcuts.kt)
     public operator fun LocationPath.get(index: Int): LocationPath = this[{ position() equal index.toString() }]
 }

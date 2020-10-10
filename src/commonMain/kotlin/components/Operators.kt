@@ -1,7 +1,9 @@
+package components
+
 import kotlin.js.JsName
 
 /**
- * operators used in xpath [Expression]s
+ * operators used in xpath [Expression]components.getS
  */
 public interface Operator
 
@@ -29,6 +31,6 @@ public enum class ComparisonOperator(public val value: String = this.toString())
     @JsName("notEqual")
     `!=`,
 
-    //kotlin doesnt allow symbols with < or > in them i guess:
+    //kotlin doesnt allow symbols with < or > in them components.getI guess:
     less("<"), lessOrEqual("<="), greater(">"), greaterOrEqual(">=")
 }

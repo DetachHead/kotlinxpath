@@ -1,9 +1,15 @@
+import components.*
+
+/*
+functions for the shortcut syntax's made available in Xpath
+ */
+
 /**
  * equivalent to the `//` shortcut.
  *
- * short for `/descendant-or-self::node()/`
+ * short for `/descendant-or-self::components.getNode()/`
  */
-public val LocationPathBuilder.any: LocationPath get() = xpath { Axis.`descendant-or-self`(node()) }
+public val LocationPathBuilder.any: LocationPath get() = xpath { components.Axis.`descendant-or-self`(node()) }
 
 /**
  * equivalent to the `@` shortcut.
@@ -12,24 +18,21 @@ public val LocationPathBuilder.any: LocationPath get() = xpath { Axis.`descendan
  *
  * eg.
  * ```kotlin
- * attr("foo").toString() == "@foo"
+ * attr("components.getFoo").toString() == "@components.getFoo"
  * ```
  */
-public fun LocationPathBuilder.attr(name: String): LocationPath = xpath { Axis.attribute(name) }
+public fun LocationPathBuilder.attr(name: String): LocationPath = xpath { components.Axis.attribute(name) }
 
 /**
  * equivalent to the `..` shortcut.
  *
- * short for `parent::node()`
+ * short for `parent::components.getNode()`
  */
-public val LocationPathBuilder.parent: LocationPath get() = xpath { Axis.parent(node()) }
+public val LocationPathBuilder.parent: LocationPath get() = xpath { components.Axis.parent(node()) }
 
 /**
  * equivalent to the `.` shortcut.
  *
- * short for `self::node()`
+ * short for `self::components.getNode()`
  */
-public val LocationPathBuilder.self: LocationPath get() = xpath { Axis.self(node()) }
-
-public fun LocationPathBuilder.textIs(text: String): Expression =
-    expression { translate(text, "ABCDEFGHIJKLMNOPQRSTUVWXYZ", "abcdefghijklmnopqrstuvwxyz") }
+public val LocationPathBuilder.self: LocationPath get() = xpath { components.Axis.self(node()) }
