@@ -1,4 +1,3 @@
-import components.div
 import components.xpath
 import kotlin.test.Test
 import kotlin.test.assertEquals
