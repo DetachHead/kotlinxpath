@@ -6,26 +6,26 @@ class test {
     @Test
     fun attributeAndChild() =
         assertEquals(
-            "descendant-or-self::node()/div[attribute::id = '1']/child::div",
-            xpath { any(div)[{ attr("id") equal "1" }] / div }.toString()
+            "descendant-or-self::node()/child::div[attribute::id = '1']/child::span",
+            xpath { any(div)[{ attr("id") equal "1" }] / span }.toString()
         )
 
     @Test
     fun indexTest() =
         assertEquals(
-            "descendant-or-self::div[position() = '1']", xpath { any(div)[1] }.toString()
+            "descendant-or-self::node()/child::div[position() = '1']", xpath { any(div)[1] }.toString()
         )
 
-    //TODO: make these old tests work with the new rewrite
     @Test
     fun innertext() =
         assertEquals(
-            "//div[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
+            "descendant-or-self::node()/child::div[attribute::id = 'thing' and translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'sdfg']",
             xpath {
                 any(div)[{attr("id") equal "thing" and textIs("sdfg")}]
             }.toString()
         )
-//
+
+    //TODO: make these old tests work with the new rewrite
 //    @Test
 //    fun child() =
 //        assertEquals(
