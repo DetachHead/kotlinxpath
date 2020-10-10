@@ -198,6 +198,31 @@ public class ExpressionBuilder : Buildable<Expression> {
     public fun `substring-after`(first: String, second: String): Expression =
         `substring-before`(Expression(first), Expression(second))
 
+    //TODO: move this since its not part of xpath 1
+    public fun translate(string: Expression, from: Expression, to: Expression): Expression =
+        functionExpression("translate", listOf(string, from, to))
+
+    public fun translate(string: Expression, from: Expression, to: String): Expression =
+        translate(string, from, Expression(to))
+
+    public fun translate(string: Expression, from: String, to: Expression): Expression =
+        translate(string, Expression(from), to)
+
+    public fun translate(string: Expression, from: String, to: String): Expression =
+        translate(string, Expression(from), Expression(to))
+
+    public fun translate(string: String, from: Expression, to: Expression): Expression =
+        translate(Expression(string), from, to)
+
+    public fun translate(string: String, from: Expression, to: String): Expression =
+        translate(string, from, Expression(to))
+
+    public fun translate(string: String, from: String, to: Expression): Expression =
+        translate(string, Expression(from), to)
+
+    public fun translate(string: String, from: String, to: String): Expression =
+        translate(string, Expression(from), Expression(to))
+
     @JsName("string_length")
     public fun `string-length`(expression: Expression? = null): Expression =
         functionExpression("string-length", listOf(expression))
