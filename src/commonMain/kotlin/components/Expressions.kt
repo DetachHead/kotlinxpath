@@ -3,7 +3,7 @@ package components
 import functions.concat
 
 /**
- * any valid Xpath components.expression, not necessarily a [LocationPath]
+ * any valid Xpath expression, not necessarily a [LocationPath]
  */
 public open class Expression(private val value: String) {
     public constructor(value: XpathString) : this(value.toString())
@@ -30,11 +30,11 @@ public class XpathString(public val value: String) {
     }
 }
 
-/** combines two [Expression]components.getS together with an [Operator] */
+/** combines two [Expression]s together with an [Operator] */
 private fun operatorExpression(first: Expression, operator: Operator, second: Expression): Expression =
     Expression("$first $operator $second")
 
-/** creates an components.expression with an xpath [function call](https://en.wikipedia.org/wiki/XPath#Functions_and_operators) */
+/** creates an [Expression] with an xpath [function call](https://en.wikipedia.org/wiki/XPath#Functions_and_operators) */
 internal fun functionExpression(name: String, args: List<Expression?> = listOf()): Expression =
     Expression("$name(${args.filterNotNull().joinToString(",")})")
 

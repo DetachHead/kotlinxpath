@@ -33,7 +33,7 @@ public class LocationPathBuilder {
     internal lateinit var currentXpath: LocationPath
 
     /**
-     * adds the given [Expression]components.getS to the current [LocationPath]
+     * adds the given [Expression]s to the current [LocationPath]
      */
     public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = (
             if (child == null)

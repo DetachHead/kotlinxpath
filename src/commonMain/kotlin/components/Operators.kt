@@ -3,7 +3,7 @@ package components
 import kotlin.js.JsName
 
 /**
- * operators used in xpath [Expression]components.getS
+ * operators used in xpath [Expression]s
  */
 public interface Operator
 
