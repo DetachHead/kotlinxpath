@@ -33,7 +33,7 @@ assertEquals(
 )
 ```
 ### shims
-most implementations of xpath still use xpath 1.0 (including all the modern browsers), but xpath 2 and 3 have some useful functions that aren't available in xpath 1. this library contains some shims for newer functions that compile to xpath 1
+most implementations of xpath still use xpath 1.0 (including all the modern browsers), so this library includes shims for some functions available in xpath 2+
 
 note: there's only a couple shims in here at the moment. intending to add more in the future.
 #### examples
