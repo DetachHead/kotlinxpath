@@ -2,18 +2,18 @@ import components.xpath
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class test {
+class Test {
     @Test
     fun attributeAndChild() =
         assertEquals(
             "descendant-or-self::node()/child::div[attribute::id = '1']/child::span",
-            xpath { any(div)[{ attr("id") equal "1" }] / span }.toString()
+            xpath { any / div[{ attr("id") equal "1" }] / span }.toString()
         )
 
     @Test
     fun indexTest() =
         assertEquals(
-            "descendant-or-self::node()/child::div[position() = '1']", xpath { any(div)[1] }.toString()
+            "descendant-or-self::node()/child::div[position() = '1']", xpath { any / div[1] }.toString()
         )
 
     @Test
@@ -21,7 +21,7 @@ class test {
         assertEquals(
             "descendant-or-self::node()/child::div[attribute::id = 'thing' and translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'sdfg']",
             xpath {
-                any(div)[{attr("id") equal "thing" and textIs("sdfg")}]
+                any / div[{ attr("id") equal "thing" and textIs("sdfg") }]
             }.toString()
         )
 
@@ -29,30 +29,29 @@ class test {
     fun child() =
         assertEquals(
             "descendant-or-self::node()/child::div/child::p[attribute::class = 'asdf']", xpath {
-                any(div) / p[{attr("class") equal "asdf"}]
+                any / div / p[{ attr("class") equal "asdf" }]
+            }.toString()
+        )
+    @Test
+    fun nested() =
+        assertEquals(
+            "descendant-or-self::node()/child::div[self::node()/child::div[translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'asdf']]/child::div/child::p[position() = '1']",
+            xpath {
+                any / div[self / div[textIs("asdf")]] / div / p[1]
+            }.toString()
+        )
+
+    @Test
+    fun escapequotes() =
+        //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
+        assertEquals(
+            "descendant-or-self::node()/child::*[translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = concat('\"That',\"'\",'s mine\", he said.')]",
+            xpath {
+                anyNode[textIs("\"That's mine\", he said.")]
             }.toString()
         )
 
     //TODO: make these old tests work with the new rewrite
-//    @Test
-//    fun nested() =
-//        assertEquals(
-//            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/components.getP[1]",
-//            xpath {
-//                descendantOrSelf / div { div("Asdf") } / div / components.getP(1)
-//            }.toString()
-//        )
-//
-//    @Test
-//    fun escapequotes() =
-//        //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
-//        assertEquals(
-//            "//*[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')=concat('\"that',\"'\",'components.getS mine\", he said.')]",
-//            xpath {
-//                anything("\"That'components.getS mine\", he said.")
-//            }.toString()
-//        )
-//
 //    @Test
 //    fun innertextString() =
 //        assertEquals(
