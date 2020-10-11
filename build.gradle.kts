@@ -1,4 +1,7 @@
+import java.util.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+val props = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
 
 plugins {
     kotlin("multiplatform") version "1.4.0"
@@ -93,8 +96,8 @@ configure<PublishingExtension> {
     repositories {
         maven("https://api.bintray.com/maven/detachhead/detach/${project.name}/;publish=1") {
             credentials {
-                username = project.findProperty("bintrayUser").toString()
-                password = project.findProperty("bintrayKey").toString()
+                username = props.getProperty("bintrayUser")
+                password = props.getProperty("bintrayKey")
             }
         }
     }
