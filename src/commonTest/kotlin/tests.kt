@@ -60,14 +60,14 @@ class Test {
         )
 
     //TODO: make these old tests work with the new rewrite
-//    @Test
-//    fun childstring() =
-//        assertEquals(
-//            "//div/components.getP[@class='asdf']",
-//            xpath {
-//                descendantOrSelf / "div" / "components.getP"("class" to "asdf")
-//            }.toString()
-//        )
+    @Test
+    fun twoStringNodeTests() =
+        assertEquals(
+            "descendant-or-self::node()/child::div/child::p[attribute::class = 'asdf']",
+            xpath {
+                any / "div" / "p"[{ attr("class") equal "asdf" }]
+            }.toString()
+        )
 //
 //    @Test
 //    fun nestedstring() =
