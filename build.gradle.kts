@@ -95,11 +95,13 @@ configure<PublishingExtension> {
             version = project.version.toString()
         }
     }
-    repositories {
-        maven("https://api.bintray.com/maven/detachhead/detach/${project.name}/;publish=1") {
-            credentials {
-                username = props!!.getProperty("bintrayUser")
-                password = props.getProperty("bintrayKey")
+    props?.let {
+        repositories {
+            maven("https://api.bintray.com/maven/detachhead/detach/${project.name}/;publish=1") {
+                credentials {
+                    username = it.getProperty("bintrayUser")
+                    password = it.getProperty("bintrayKey")
+                }
             }
         }
     }
