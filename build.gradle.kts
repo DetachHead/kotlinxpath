@@ -1,7 +1,9 @@
 import java.util.*
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val props = Properties().apply { load(project.rootProject.file("local.properties").inputStream()) }
+val props = project.rootProject.file("local.properties").takeIf { it.exists() }?.let {
+    Properties().apply { load(it.inputStream()) }
+}
 
 plugins {
     kotlin("multiplatform") version "1.4.0"
@@ -96,7 +98,7 @@ configure<PublishingExtension> {
     repositories {
         maven("https://api.bintray.com/maven/detachhead/detach/${project.name}/;publish=1") {
             credentials {
-                username = props.getProperty("bintrayUser")
+                username = props!!.getProperty("bintrayUser")
                 password = props.getProperty("bintrayKey")
             }
         }
