@@ -2,6 +2,9 @@ package components
 
 import kotlin.js.JsName
 
+@DslMarker
+internal annotation class OperatorMarker
+
 /**
  * operators used in xpath [Expression]s
  */

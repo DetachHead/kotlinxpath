@@ -1,9 +1,13 @@
 import components.*
 
+@DslMarker
+internal annotation class ShortcutMarker
+
 /*
 functions for the various shortcuts that are available in Xpath
  */
 
+@ShortcutMarker
 /**
  * equivalent to the `//` shortcut.
  *
@@ -11,6 +15,7 @@ functions for the various shortcuts that are available in Xpath
  */
 public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-self`(node())
 
+@ShortcutMarker
 /**
  * equivalent to the //&#42 shortcut.
  *
@@ -18,6 +23,7 @@ public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-sel
  */
 public val LocationPathBuilder.anyNode: LocationPath get() = any / "*"
 
+@ShortcutMarker
 /**
  * equivalent to the `@` shortcut.
  *
@@ -30,6 +36,7 @@ public val LocationPathBuilder.anyNode: LocationPath get() = any / "*"
  */
 public fun LocationPathBuilder.attr(name: String): LocationPath = Axis.attribute(name)
 
+@ShortcutMarker
 /**
  * equivalent to the `..` shortcut.
  *
@@ -37,6 +44,7 @@ public fun LocationPathBuilder.attr(name: String): LocationPath = Axis.attribute
  */
 public val LocationPathBuilder.parent: LocationPath get() = Axis.parent(node())
 
+@ShortcutMarker
 /**
  * equivalent to the `.` shortcut.
  *
