@@ -6,7 +6,7 @@ import functions.concat
 /**
  * any valid Xpath components.expression, not necessarily a [LocationPath]
  */
-public open class Expression(public val value: String) {
+public open class Expression(private val value: String) {
     public constructor(value: XpathString) : this(value.toString())
     public constructor(value: Boolean) : this(XpathString(value.toString()))
     public constructor(value: Int) : this(value.toString())
