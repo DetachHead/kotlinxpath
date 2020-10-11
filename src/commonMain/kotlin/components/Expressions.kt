@@ -1,6 +1,7 @@
 package components
 
 import functions.concat
+import splitKeep
 
 /**
  * any valid Xpath expression, not necessarily a [LocationPath]
@@ -24,7 +25,7 @@ public class XpathString(public val value: String) {
         //xpath has no real way of escaping, so use various ways to esc values with quotes.
         //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
         value.contains("'") && value.contains("\"") ->
-            expression { concat(*(value.split("'").toTypedArray())) }.toString()
+            expression { concat(*(value.splitKeep("'").map { Expression.fromString(it) }.toTypedArray())) }.toString()
         value.contains("'") -> "\"$value\""
         else -> "'$value'"
     }
