@@ -1,5 +1,5 @@
 # kotlinxpath
-A Kotlin typesafe builder for xpath with helpful shortcuts for handling the pain points, such as case sensitivity, quote escaping and HTML-specific helper functions for things like class checking.
+A Kotlin typesafe builder for xpath with helpful shortcuts for handling the pain points, such as case sensitivity, quote escaping and HTML-specific helper functions.
 
 ![CI](https://github.com/DetachHead/xpath-builder/workflows/CI/badge.svg)
 
@@ -43,4 +43,26 @@ assertEquals(
     "translate('Foo','ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'foo'",
     expression { `lower-case`("Foo") equal "foo" }.toString()
 )
+```
+
+## setup
+in your `build.gradle.kts`:
+```kotlin
+repositories {
+    maven("https://dl.bintray.com/detachhead/detach/")
+}
+```
+
+### multiplatform projects
+
+```kotlin
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("io.github.detachhead:kotlinxpath:1.0")
+            }
+        }
+    }
+}
 ```

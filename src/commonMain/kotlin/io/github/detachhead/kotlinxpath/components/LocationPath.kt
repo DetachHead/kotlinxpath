@@ -1,7 +1,6 @@
-package components
+package io.github.detachhead.kotlinxpath.components
 
-import NodeTest
-import functions.position
+import io.github.detachhead.kotlinxpath.functions.position
 
 /**
  * an xpath [location path](https://en.wikipedia.org/wiki/XPath#Syntax_and_semantics_(XPath_1.0))

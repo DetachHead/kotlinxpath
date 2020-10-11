@@ -1,8 +1,8 @@
-package functions
+package io.github.detachhead.kotlinxpath.functions
 
-import components.Expression
-import components.ExpressionBuilder
-import components.LocationPath
+import io.github.detachhead.kotlinxpath.components.Expression
+import io.github.detachhead.kotlinxpath.components.ExpressionBuilder
+import io.github.detachhead.kotlinxpath.components.LocationPath
 import kotlin.js.JsName
 
 @DslMarker

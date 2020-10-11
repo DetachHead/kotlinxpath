@@ -1,5 +1,6 @@
-import components.xpath
-import functions.position
+import io.github.detachhead.kotlinxpath.*
+import io.github.detachhead.kotlinxpath.components.*
+import io.github.detachhead.kotlinxpath.functions.position
 import kotlin.test.Test
 import kotlin.test.assertEquals
 

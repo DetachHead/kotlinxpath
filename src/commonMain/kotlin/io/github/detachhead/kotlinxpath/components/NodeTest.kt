@@ -1,4 +1,6 @@
-import components.LocationPathBuilder
+package io.github.detachhead.kotlinxpath.components
+
+import io.github.detachhead.kotlinxpath.components.LocationPathBuilder
 import kotlin.js.JsName
 import kotlin.reflect.KProperty
 
