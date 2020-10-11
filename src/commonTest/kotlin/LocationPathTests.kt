@@ -3,7 +3,7 @@ import functions.position
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
-class Test {
+class LocationPathTests {
     @Test
     fun attributeAndChild() =
         assertEquals(
