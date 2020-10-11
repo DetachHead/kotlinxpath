@@ -31,7 +31,7 @@ public class LocationPathBuilder {
     internal lateinit var currentXpath: LocationPath
 
     /**
-     * adds the given [Expression]s to the current [LocationPath]
+     * adds the given [predicates] to the current [LocationPath]
      */
     public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = (
             if (child == null)
@@ -40,19 +40,22 @@ public class LocationPathBuilder {
                 LocationPath(axis, nodetest, this.predicates, child[predicates])
             ).also { currentXpath = it }
 
+    /** adds the given [predicate] to the current [LocationPath] */
     public operator fun LocationPath.get(predicate: Expression): LocationPath =
         this[{ expression = predicate }]
 
+    /** creates a [LocationPath] from the current [NodeTest] and [predicates] */
     public operator fun NodeTest.get(predicates: ExpressionBuilder.() -> Unit): LocationPath =
         LocationPath(Axis.child, this)[predicates].also {
             currentXpath = it
         }
 
+    /** creates a [LocationPath] from the current [NodeTest] and [predicate] */
     public operator fun NodeTest.get(predicate: Expression): LocationPath =
         this[{ expression = predicate }]
 
     /**
-     * Adds a [LocationPath] to the current [LocationPath]
+     * Adds a [LocationPath] as a [Axis.child] to the current [LocationPath]
      */
     public operator fun LocationPath.div(other: LocationPath): LocationPath = (
             if (child == null)
@@ -62,11 +65,14 @@ public class LocationPathBuilder {
             ).also { currentXpath = it }
 
     /**
-     * appends the given [NodeTest] to the current [LocationPath]
+     * appends the given [NodeTest] as a [Axis.child] to the current [LocationPath]
      */
     public operator fun LocationPath.div(other: NodeTest): LocationPath =
         this / LocationPath(Axis.child, other)
 
+    /**
+     * appends a [NodeTest] from the given [String] as a [Axis.child] to the current [LocationPath]
+     */
     public operator fun LocationPath.div(other: String): LocationPath = this / NodeTest(other)
 
     /**

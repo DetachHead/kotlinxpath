@@ -14,7 +14,7 @@ private class NodeTestDelegate {
     operator fun getValue(thisRef: Any?, property: KProperty<*>): NodeTest = NodeTest(property.name)
 }
 
-/** creates a [NodeTest] that's a function call (appends `()` to the end of it) */
+/** creates a [NodeTest] that's a function call (ie. appends `()` to the end of it) */
 private fun nodeTestFunction(value: String) = NodeTest("$value()")
 
 /** creates a [NodeTest] function with [nodeTestFunction] using the name of the property */

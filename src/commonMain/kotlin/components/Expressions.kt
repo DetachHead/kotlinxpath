@@ -41,6 +41,7 @@ public fun expression(block: ExpressionBuilder.() -> Unit): Expression = Express
  * typesafe builder for [Expression] for use as [predicates](https://en.wikipedia.org/wiki/XPath#Predicates)
  */
 public class ExpressionBuilder {
+    /** the current [Expression] buing built */
     internal lateinit var expression: Expression
 
     /** combines two [Expression]s together with an [Operator] */
@@ -51,6 +52,11 @@ public class ExpressionBuilder {
     internal fun functionExpression(name: String, args: List<Expression?> = listOf()): Expression =
         Expression("$name(${args.filterNotNull().joinToString(",")})").also { expression = it }
 
+    /**
+     * adds an [Operator] and another [Expression] to the current [Expression]
+     *
+     * for use by xpath functions
+     */
     private fun Expression.operator(operator: Operator, other: Expression): Expression =
         operatorExpression(this, operator, other).also { expression = it }
 
