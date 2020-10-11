@@ -1,51 +1,48 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    kotlin("multiplatform") version "1.4-M3"
+    kotlin("multiplatform") version "1.4.0"
 }
 group = "org.example"
 version = "1.0-SNAPSHOT"
 repositories {
-    maven("https://dl.bintray.com/kotlin/kotlin-eap")
     mavenCentral()
 }
 
+tasks.withType<KotlinCompile>().configureEach {
+    kotlinOptions.useIR = true
+}
+
 kotlin {
+    explicitApi()
     js { nodejs() }
     jvm {}
     mingwX64 {}
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-common"))
-            }
-        }
+        @Suppress("unused_variable")
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-annotations-common"))
             }
         }
-        val jvmMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-jdk8"))
-            }
-        }
+
+        @Suppress("unused_variable")
         val jvmTest by getting {
             dependencies {
                 implementation(kotlin("test-junit"))
             }
         }
-        val jsMain by getting {
-            dependencies {
-                implementation(kotlin("stdlib-js"))
-            }
-        }
+
+        @Suppress("unused_variable")
         val jsTest by getting {
             dependencies {
                 implementation(kotlin("test-common"))
                 implementation(kotlin("test-js"))
             }
         }
-        //TODO: get this working... mingwX64('mingw').compilations.main.defaultSourceSet { /* ... */ }
+
+        @Suppress("unused_variable")
         val mingwX64Test by getting { }
     }
 }
