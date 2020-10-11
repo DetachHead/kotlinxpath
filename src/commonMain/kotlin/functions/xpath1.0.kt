@@ -3,7 +3,6 @@ package functions
 import components.Expression
 import components.ExpressionBuilder
 import components.LocationPath
-import components.functionExpression
 import kotlin.js.JsName
 
 /*

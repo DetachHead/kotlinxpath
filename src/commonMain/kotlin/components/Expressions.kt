@@ -31,14 +31,6 @@ public class XpathString(public val value: String) {
     }
 }
 
-/** combines two [Expression]s together with an [Operator] */
-private fun operatorExpression(first: Expression, operator: Operator, second: Expression): Expression =
-    Expression("$first $operator $second")
-
-/** creates an [Expression] with an xpath [function call](https://en.wikipedia.org/wiki/XPath#Functions_and_operators) */
-internal fun functionExpression(name: String, args: List<Expression?> = listOf()): Expression =
-    Expression("$name(${args.filterNotNull().joinToString(",")})")
-
 /**
  * creates an [Expression] using the [ExpressionBuilder] with the given [block]
  * to build an actual xpath ([LocationPath]), use [xpath] instead
@@ -50,6 +42,15 @@ public fun expression(block: ExpressionBuilder.() -> Unit): Expression = Express
  */
 public class ExpressionBuilder {
     internal lateinit var expression: Expression
+
+
+    /** combines two [Expression]s together with an [Operator] */
+    private fun operatorExpression(first: Expression, operator: Operator, second: Expression): Expression =
+        Expression("$first $operator $second").also { expression = it }
+
+    /** creates an [Expression] with an xpath [function call](https://en.wikipedia.org/wiki/XPath#Functions_and_operators) */
+    internal fun functionExpression(name: String, args: List<Expression?> = listOf()): Expression =
+        Expression("$name(${args.filterNotNull().joinToString(",")})").also { expression = it }
 
     private fun Expression.operator(operator: Operator, other: Expression): Expression =
         operatorExpression(this, operator, other).also { expression = it }
