@@ -10,7 +10,7 @@ import functions.xpath1_shims.`lower-case`
 useful helper functions unique to this library to help make xpath less of a pain to work with
  */
 
-/** compares text case-insensitively and trims whitespace */
+/** converts all text to lowercase, automatically handles quote escaping and trims any whitespace */
 public fun LocationPathBuilder.textIs(text: String): Expression =
     expression { `lower-case`(`normalize-space`(self)) equal text }
 
