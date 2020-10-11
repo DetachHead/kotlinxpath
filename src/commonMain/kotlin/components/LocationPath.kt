@@ -79,9 +79,15 @@ public class LocationPathBuilder {
      */
     public operator fun Axis.invoke(node: String): LocationPath = this(NodeTest(node))
 
+    //TODO: figure out how to separate these like the rest of the shortcuts (see shortcuts.kt):
     /**
      * shortcut for an [ExpressionBuilder.position] predicate
      */
-    //TODO: components.getFigure out how to separate this like the rest of the shortcuts (see shortcuts.kt)
     public operator fun LocationPath.get(index: Int): LocationPath = this[{ position() equal index.toString() }]
+
+    /**
+     * shortcut for an [ExpressionBuilder.position] predicate
+     */
+    public operator fun NodeTest.get(index: Int): LocationPath =
+        LocationPath(Axis.child, this)[index]
 }
