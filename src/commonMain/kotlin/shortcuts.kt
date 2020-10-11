@@ -12,6 +12,13 @@ functions for the various shortcuts that are available in Xpath
 public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-self`(node())
 
 /**
+ * equivalent to the //&#42 shortcut.
+ *
+ * short for /descendant-or-self::components.getNode()/&#42
+ */
+public val LocationPathBuilder.anyNode: LocationPath get() = any / "*"
+
+/**
  * equivalent to the `@` shortcut.
  *
  * short for `attribute::abc`
