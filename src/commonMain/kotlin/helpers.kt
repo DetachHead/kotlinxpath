@@ -15,5 +15,7 @@ public fun LocationPathBuilder.textIs(text: String): Expression =
     expression { `lower-case`(`normalize-space`(self)) equal text }
 
 /** checks whether the element has the given [className] */
-public fun LocationPathBuilder.classContains(className: String): Expression =
-    expression { contains(concat(" ", attr("class").toString(), " "), " $className ") }
+public fun LocationPathBuilder.hasClass(className: String): Expression {
+    val space = Expression.fromString(" ")
+    return expression { contains(concat(space, attr("class"), space), " $className ") }
+}

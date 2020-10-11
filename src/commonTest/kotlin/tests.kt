@@ -81,4 +81,11 @@ class Test {
                 any / "div"[self / "div"[textIs("asdf")]] / "div" / "p"[{ position() equal "1" }]
             }.toString()
         )
+
+    @Test
+    fun classContains() =
+        assertEquals(
+            "descendant-or-self::node()/child::*[contains(concat(' ',attribute::class,' '),' foo ')]",
+            xpath { anyNode[hasClass("foo")] }.toString()
+        )
 }
