@@ -40,12 +40,15 @@ public class LocationPathBuilder {
                 LocationPath(axis, nodetest, this.predicates, child[predicates])
             ).also { currentXpath = it }
 
+    public operator fun LocationPath.get(predicate: Expression): LocationPath =
+        this[{ expression = predicate }]
+
     public operator fun NodeTest.get(predicates: ExpressionBuilder.() -> Unit): LocationPath =
         LocationPath(Axis.child, this)[predicates].also {
             currentXpath = it
         }
 
-    public operator fun LocationPath.get(predicate: Expression): LocationPath =
+    public operator fun NodeTest.get(predicate: Expression): LocationPath =
         this[{ expression = predicate }]
 
     /**
@@ -64,12 +67,7 @@ public class LocationPathBuilder {
     public operator fun LocationPath.div(other: NodeTest): LocationPath =
         this / LocationPath(Axis.child, other)
 
-    /**
-     * appends the given [NodeTest] to the current [LocationPath]
-     */
-    public operator fun LocationPath.invoke(other: NodeTest): LocationPath {
-        return this / other
-    }
+    public operator fun LocationPath.div(other: String): LocationPath = this / NodeTest(other)
 
     /**
      * creates a [LocationPath] with the current [Axis] and the given [NodeTest]
