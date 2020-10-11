@@ -19,8 +19,6 @@ public open class LocationPath(
     //TODO: handling for scenarios where you want the xpath to start with a single /
 }
 
-public val foo: String = ""
-
 /**
  * creates a [LocationPath] using the [LocationPathBuilder] with the given [block]
  */
