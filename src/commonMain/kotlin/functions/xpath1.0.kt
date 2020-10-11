@@ -149,7 +149,8 @@ public fun ExpressionBuilder.`normalize-space`(expression: Expression? = null): 
     functionExpression("normalize-space", listOf(expression))
 
 @JsName("normalize_space2")
-public fun ExpressionBuilder.`normalize-space`(string: String): Expression = `normalize-space`(Expression(string))
+public fun ExpressionBuilder.`normalize-space`(string: String): Expression =
+    `normalize-space`(Expression.fromString(string))
 
 public fun ExpressionBuilder.not(expression: Expression): Expression = functionExpression("not", listOf(expression))
 public fun ExpressionBuilder.not(bool: Boolean): Expression = not(Expression(bool))
