@@ -1,4 +1,5 @@
 import components.xpath
+import functions.position
 import kotlin.test.Test
 import kotlin.test.assertEquals
 
@@ -61,7 +62,6 @@ class Test {
             }.toString()
         )
 
-    //TODO: make these old tests work with the new rewrite
     @Test
     fun twoStringNodeTests() =
         assertEquals(
@@ -70,13 +70,15 @@ class Test {
                 any / "div" / "p"[{ attr("class") equal "asdf" }]
             }.toString()
         )
-//
-//    @Test
-//    fun nestedstring() =
-//        assertEquals(
-//            "//div[./div[translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='asdf']]/div/components.getP[1]",
-//            xpath {
-//                descendantOrSelf / "div" { "div"("Asdf") } / "div" / "components.getP"(1)
-//            }.toString()
-//        )
+
+    @Test
+    fun nestedstring() =
+        assertEquals(
+            "descendant-or-self::node()/child::div[self::node()/child::div[translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'asdf']]/child::div/child::p[position() = '1']",
+            xpath {
+                //TODO: figure out a way to add the index predicate shortcut to strings (gets shadowed by the default implementation)
+                //TODO: fix inconsistency with predicates, some of them require blocks and others dont. and messing them up causes a runtime error
+                any / "div"[self / "div"[textIs("asdf")]] / "div" / "p"[{ position() equal "1" }]
+            }.toString()
+        )
 }
