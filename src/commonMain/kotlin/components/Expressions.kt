@@ -43,7 +43,6 @@ public fun expression(block: ExpressionBuilder.() -> Unit): Expression = Express
 public class ExpressionBuilder {
     internal lateinit var expression: Expression
 
-
     /** combines two [Expression]s together with an [Operator] */
     private fun operatorExpression(first: Expression, operator: Operator, second: Expression): Expression =
         Expression("$first $operator $second").also { expression = it }
