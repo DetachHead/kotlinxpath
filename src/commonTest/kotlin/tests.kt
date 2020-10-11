@@ -32,6 +32,7 @@ class Test {
                 any / div / p[{ attr("class") equal "asdf" }]
             }.toString()
         )
+
     @Test
     fun nested() =
         assertEquals(
@@ -50,12 +51,13 @@ class Test {
                 anyNode[textIs("\"That's mine\", he said.")]
             }.toString()
         )
+
     @Test
     fun stringNodeTest() =
         assertEquals(
             "descendant-or-self::node()/child::asdf[attribute::id = 'thing' and translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'sdfg']",
             xpath {
-                any / "asdf"[{attr("id") equal "thing" and textIs("sdfg")}]
+                any / "asdf"[{ attr("id") equal "thing" and textIs("sdfg") }]
             }.toString()
         )
 
