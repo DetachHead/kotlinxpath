@@ -25,15 +25,15 @@ class test {
             }.toString()
         )
 
+    @Test
+    fun child() =
+        assertEquals(
+            "descendant-or-self::node()/child::div/child::p[attribute::class = 'asdf']", xpath {
+                any(div) / p[{attr("class") equal "asdf"}]
+            }.toString()
+        )
+
     //TODO: make these old tests work with the new rewrite
-//    @Test
-//    fun child() =
-//        assertEquals(
-//            "//div/components.getP[@class='asdf']", xpath {
-//                descendantOrSelf / div / components.getP("class" to "asdf")
-//            }.toString()
-//        )
-//
 //    @Test
 //    fun nested() =
 //        assertEquals(

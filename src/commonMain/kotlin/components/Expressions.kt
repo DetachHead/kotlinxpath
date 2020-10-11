@@ -1,6 +1,5 @@
 package components
 
-import Buildable
 import functions.concat
 
 /**
@@ -43,14 +42,13 @@ internal fun functionExpression(name: String, args: List<Expression?> = listOf()
  * creates an [Expression] using the [ExpressionBuilder] with the given [block]
  * to build an actual xpath ([LocationPath]), use [xpath] instead
  */
-public fun expression(block: ExpressionBuilder.() -> Unit): Expression = ExpressionBuilder().apply(block).build()
+public fun expression(block: ExpressionBuilder.() -> Unit): Expression = ExpressionBuilder().apply(block).expression
 
 /**
  * typesafe builder for [Expression] for use as [predicates](https://en.wikipedia.org/wiki/XPath#Predicates)
  */
-public class ExpressionBuilder : Buildable<Expression> {
-    private lateinit var expression: Expression
-    override fun build(): Expression = expression
+public class ExpressionBuilder {
+    internal lateinit var expression: Expression
 
     private fun Expression.operator(operator: Operator, other: Expression): Expression =
         operatorExpression(this, operator, other).also { expression = it }
