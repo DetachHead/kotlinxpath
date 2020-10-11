@@ -1,9 +1,9 @@
-package functions.xpath1_shims
+package io.github.detachhead.kotlinxpath.functions.xpath1_shims
 
-import components.Expression
-import components.ExpressionBuilder
-import functions.FunctionMarker
-import functions.translate
+import io.github.detachhead.kotlinxpath.components.Expression
+import io.github.detachhead.kotlinxpath.components.ExpressionBuilder
+import io.github.detachhead.kotlinxpath.functions.FunctionMarker
+import io.github.detachhead.kotlinxpath.functions.translate
 import kotlin.js.JsName
 
 /*

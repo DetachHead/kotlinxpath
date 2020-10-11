@@ -1,6 +1,6 @@
-package components
+package io.github.detachhead.kotlinxpath.components
 
-import functions.concat
+import io.github.detachhead.kotlinxpath.functions.concat
 import splitKeep
 
 /**

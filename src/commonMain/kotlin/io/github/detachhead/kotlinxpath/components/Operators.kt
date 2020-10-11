@@ -1,4 +1,4 @@
-package components
+package io.github.detachhead.kotlinxpath.components
 
 import kotlin.js.JsName
 

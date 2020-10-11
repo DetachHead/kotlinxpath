@@ -1,6 +1,6 @@
-import components.expression
-import functions.xpath1_shims.`lower-case`
-import functions.xpath1_shims.`upper-case`
+import io.github.detachhead.kotlinxpath.components.expression
+import io.github.detachhead.kotlinxpath.functions.xpath1_shims.`lower-case`
+import io.github.detachhead.kotlinxpath.functions.xpath1_shims.`upper-case`
 import kotlin.js.JsName
 import kotlin.test.Test
 import kotlin.test.assertEquals

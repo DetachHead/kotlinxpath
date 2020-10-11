@@ -1,10 +1,12 @@
-import components.Expression
-import components.LocationPathBuilder
-import components.expression
-import functions.`normalize-space`
-import functions.concat
-import functions.contains
-import functions.xpath1_shims.`lower-case`
+package io.github.detachhead.kotlinxpath
+
+import io.github.detachhead.kotlinxpath.components.*
+import io.github.detachhead.kotlinxpath.components.LocationPathBuilder
+import io.github.detachhead.kotlinxpath.components.expression
+import io.github.detachhead.kotlinxpath.functions.`normalize-space`
+import io.github.detachhead.kotlinxpath.functions.concat
+import io.github.detachhead.kotlinxpath.functions.contains
+import io.github.detachhead.kotlinxpath.functions.xpath1_shims.`lower-case`
 
 /*
 useful helper functions unique to this library to help make xpath less of a pain to work with
