@@ -50,17 +50,16 @@ class Test {
                 anyNode[textIs("\"That's mine\", he said.")]
             }.toString()
         )
+    @Test
+    fun stringNodeTest() =
+        assertEquals(
+            "descendant-or-self::node()/child::asdf[attribute::id = 'thing' and translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = 'sdfg']",
+            xpath {
+                any / "asdf"[{attr("id") equal "thing" and textIs("sdfg")}]
+            }.toString()
+        )
 
     //TODO: make these old tests work with the new rewrite
-//    @Test
-//    fun innertextString() =
-//        assertEquals(
-//            "//asdf[@id='thing' and translate(normalize-space(.), 'ABCDEFGHIJKLMNOPQRSTUVWXYZ', 'abcdefghijklmnopqrstuvwxyz')='sdfg']",
-//            xpath {
-//                descendantOrSelf / "asdf"("id" to "thing", text = "sdfg")
-//            }.toString()
-//        )
-//
 //    @Test
 //    fun childstring() =
 //        assertEquals(

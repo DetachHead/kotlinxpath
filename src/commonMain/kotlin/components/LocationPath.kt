@@ -54,6 +54,12 @@ public class LocationPathBuilder {
     public operator fun NodeTest.get(predicate: Expression): LocationPath =
         this[{ expression = predicate }]
 
+    /** creates a [LocationPath] with a [NodeTest] made from the current [String] and [predicates] */
+    public operator fun String.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = NodeTest(this)[predicates]
+
+    /** creates a [LocationPath] with a [NodeTest] made from the current [String] and [predicate] */
+    public operator fun String.get(predicate: Expression): LocationPath = NodeTest(this)[predicate]
+
     /**
      * Adds a [LocationPath] as a [Axis.child] to the current [LocationPath]
      */
