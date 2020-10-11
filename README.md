@@ -44,3 +44,25 @@ assertEquals(
     expression { `lower-case`("Foo") equal "foo" }.toString()
 )
 ```
+
+## setup
+in your `build.gradle.kts`:
+```kotlin
+repositories {
+    maven("https://dl.bintray.com/detachhead/detach/")
+}
+```
+
+### multiplatform projects
+
+```kotlin
+kotlin {
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                implementation("io.github.detachhead:kotlinxpath:1.0")
+            }
+        }
+    }
+}
+```
