@@ -52,10 +52,8 @@ public class ExpressionBuilder : Buildable<Expression> {
     private lateinit var expression: Expression
     override fun build(): Expression = expression
 
-    private fun Expression.operator(
-        operator: Operator,
-        other: Expression
-    ): Expression = operatorExpression(this, operator, other).also { expression = it }
+    private fun Expression.operator(operator: Operator, other: Expression): Expression =
+        operatorExpression(this, operator, other).also { expression = it }
 
     /* Xpath operators */
     //=:
