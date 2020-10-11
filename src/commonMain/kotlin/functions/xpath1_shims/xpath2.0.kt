@@ -22,7 +22,7 @@ public fun ExpressionBuilder.`lower-case`(string: Expression): Expression =
 @FunctionMarker
 @JsName("lower_case2")
 public fun ExpressionBuilder.`lower-case`(string: String): Expression =
-    `lower-case`(Expression(string))
+    `lower-case`(Expression.fromString(string))
 
 @FunctionMarker
 @JsName("upper_case")
@@ -32,4 +32,4 @@ public fun ExpressionBuilder.`upper-case`(string: Expression): Expression =
 @FunctionMarker
 @JsName("upper_case2")
 public fun ExpressionBuilder.`upper-case`(string: String): Expression =
-    `upper-case`(Expression(string))
+    `upper-case`(Expression.fromString(string))
