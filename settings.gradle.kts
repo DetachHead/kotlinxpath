@@ -5,4 +5,4 @@ pluginManagement {
         maven("https://plugins.gradle.org/m2/")
     }
 }
-rootProject.name = 'kotlinxpath'
+rootProject.name = "kotlinxpath"
