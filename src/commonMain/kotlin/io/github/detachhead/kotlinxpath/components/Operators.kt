@@ -10,7 +10,7 @@ internal annotation class OperatorMarker
  */
 public interface Operator
 
-public enum class ArithmeticOperator: Operator {
+public enum class ArithmeticOperator(public val value: String = this.toString()): Operator {
     div, mod,
 
     @JsName("plus")
@@ -19,8 +19,8 @@ public enum class ArithmeticOperator: Operator {
     @JsName("minus")
     `-`,
 
-    @JsName("times")
-    `*`,
+    //dokka crashes trying to render `*`
+    times("*"),
 }
 
 public enum class BooleanOperator: Operator {
