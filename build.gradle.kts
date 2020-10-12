@@ -7,7 +7,7 @@ val props = project.rootProject.file("local.properties").takeIf { it.exists() }?
 
 plugins {
     kotlin("multiplatform") version "1.4.0"
-    id("org.jetbrains.dokka") version "1.4.10"
+    id("org.jetbrains.dokka") version "1.4.20-dev-10"
     `maven-publish`
 }
 group = "io.github.detachhead"
