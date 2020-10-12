@@ -20,7 +20,7 @@ public enum class ArithmeticOperator: Operator {
     `-`,
 
     @JsName("times")
-    `*`,
+    `*`
 }
 
 public enum class BooleanOperator: Operator {

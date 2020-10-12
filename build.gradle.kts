@@ -7,13 +7,15 @@ val props = project.rootProject.file("local.properties").takeIf { it.exists() }?
 
 plugins {
     kotlin("multiplatform") version "1.4.0"
-    id("org.jetbrains.dokka") version "1.4.10"
+    id("org.jetbrains.dokka") version "1.4.20-dev-10"
     `maven-publish`
 }
 group = "io.github.detachhead"
 version = "1.0"
 repositories {
     mavenCentral()
+    jcenter()
+    maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
 }
 
 tasks.withType<KotlinCompile>().configureEach {
