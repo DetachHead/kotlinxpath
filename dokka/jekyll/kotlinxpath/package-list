@@ -1,0 +1,8 @@
+$dokka.format:jekyll-v1
+$dokka.linkExtension:md
+
+io.github.detachhead.kotlinxpath
+io.github.detachhead.kotlinxpath.components
+io.github.detachhead.kotlinxpath.functions
+io.github.detachhead.kotlinxpath.functions.xpath1_shims
+
