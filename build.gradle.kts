@@ -14,6 +14,7 @@ group = "io.github.detachhead"
 version = "1.0"
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 tasks.withType<KotlinCompile>().configureEach {
