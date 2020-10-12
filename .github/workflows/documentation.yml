@@ -1,5 +1,8 @@
 name: gh-pages
-on: [push]
+on:
+  push:
+    branches:
+      - master
 jobs:
   gh-pages:
     runs-on: ubuntu-latest
