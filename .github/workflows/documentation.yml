@@ -1,7 +1,7 @@
-name: Build and Deploy
+name: gh-pages
 on: [push]
 jobs:
-  build-and-deploy:
+  gh-pages:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
