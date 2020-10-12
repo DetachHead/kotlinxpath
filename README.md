@@ -1,6 +1,8 @@
 # kotlinxpath
 A Kotlin typesafe builder for xpath with helpful shortcuts for handling the pain points, such as case sensitivity, quote escaping and HTML-specific helper functions.
 
+[documentation](https://detachhead.github.io/kotlinxpath/kotlinxpath/index.html)
+
 ![CI](https://github.com/DetachHead/xpath-builder/workflows/CI/badge.svg)
 
 ## Example
