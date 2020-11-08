@@ -62,7 +62,7 @@ public class LocationPathBuilder {
         LocationPath(Axis.child, NodeTest(this))[predicate]
 
     /**
-     * Adds a [LocationPath] as a [Axis.child] to the current [LocationPath]
+     * Adds a [LocationPath] to the current [LocationPath]
      */
     public operator fun LocationPath.div(other: LocationPath): LocationPath = (
             if (child == null)
