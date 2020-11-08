@@ -89,4 +89,18 @@ class LocationPathTests {
             "descendant-or-self::node()/child::*[contains(concat(' ',attribute::class,' '),' foo ')]",
             xpath { anyNode[hasClass("foo")] }.toString()
         )
+
+    @Test
+    fun startWithNodeTest() =
+        assertEquals(
+            "child::div/child::p",
+            xpath { div / p }.toString()
+        )
+
+    @Test
+    fun startWithNodeTestFollowedByLocationPath() =
+        assertEquals(
+            "child::div/child::p[position() = '1']",
+            xpath { div / p[1] }.toString()
+        )
 }
