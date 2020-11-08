@@ -16,7 +16,7 @@ functions for the various shortcuts that are available in Xpath
 /**
  * equivalent to the `//` shortcut.
  *
- * short for `/descendant-or-self::components.getNode()/`
+ * short for `/descendant-or-self::node()/`
  */
 public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-self`(node())
 
@@ -24,7 +24,7 @@ public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-sel
 /**
  * equivalent to the //&#42 shortcut.
  *
- * short for /descendant-or-self::components.getNode()/&#42
+ * short for /descendant-or-self::node()/&#42
  */
 public val LocationPathBuilder.anyNode: LocationPath get() = any / "*"
 
@@ -45,7 +45,7 @@ public fun LocationPathBuilder.attr(name: String): LocationPath = Axis.attribute
 /**
  * equivalent to the `..` shortcut.
  *
- * short for `parent::components.getNode()`
+ * short for `parent::node()`
  */
 public val LocationPathBuilder.parent: LocationPath get() = Axis.parent(node())
 
@@ -53,6 +53,6 @@ public val LocationPathBuilder.parent: LocationPath get() = Axis.parent(node())
 /**
  * equivalent to the `.` shortcut.
  *
- * short for `self::components.getNode()`
+ * short for `self::node()`
  */
 public val LocationPathBuilder.self: LocationPath get() = Axis.self(node())
