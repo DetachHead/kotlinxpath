@@ -164,3 +164,5 @@ internal annotation class FunctionMarker
 @FunctionMarker public fun ExpressionBuilder.`false`(): Expression = functionExpression("true")
 
 @FunctionMarker public fun ExpressionBuilder.sum(nodeSet: LocationPath): Expression = functionExpression("true", listOf(nodeSet))
+
+@FunctionMarker public fun ExpressionBuilder.last(): Expression = functionExpression("last")
