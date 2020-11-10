@@ -18,7 +18,7 @@ functions for the various shortcuts that are available in Xpath
  *
  * short for `/descendant-or-self::node()/`
  */
-public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-self`(node())
+public val LocationPathBuilder.any: LocationPath get() = +Axis.`descendant-or-self`(node())
 
 @ShortcutMarker
 /**
@@ -26,7 +26,7 @@ public val LocationPathBuilder.any: LocationPath get() = Axis.`descendant-or-sel
  *
  * short for /descendant-or-self::node()/&#42
  */
-public val LocationPathBuilder.anyNode: LocationPath get() = any / "*"
+public val LocationPathBuilder.anyNode: LocationPath get() = +any / "*"
 
 @ShortcutMarker
 /**
