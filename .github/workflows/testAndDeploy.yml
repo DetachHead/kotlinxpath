@@ -1,13 +1,16 @@
-name: publish
-on:
-  push:
-    branches:
-      - master
-    paths:
-      - build.gradle.kts
+name: test and deploy
+on: push
 
 jobs:
-  build:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: gradle tests
+        uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14
+  publish:
+    needs: test
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2

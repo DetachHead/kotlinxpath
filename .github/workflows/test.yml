@@ -1,5 +1,11 @@
 name: tests
-on: [ "push", "pull_request" ]
+on:
+  push: # every branch except master as thats handled by testAndDeploy
+    branches-ignore:
+      - master
+  pull_request:
+    branches:
+      - '*'
 
 jobs:
   build:
