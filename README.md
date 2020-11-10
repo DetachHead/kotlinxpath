@@ -8,7 +8,7 @@ A Kotlin typesafe builder for xpath with helpful shortcuts for handling the pain
 ## Example
 ```kotlin
 assertEquals(
-    "descendant-or-self::node()/child::div[attribute::id = '1']/child::span",
+    "/descendant-or-self::node()/child::div[attribute::id = '1']/child::span",
     xpath { any / div[{ attr("id") equal "1" }] / span }.toString()
 )
 ```
@@ -20,7 +20,7 @@ this library includes several useful shortcuts to help with common patterns.
 converts all text to lowercase, automatically handles quote escaping and trims any whitespace
 ```kotlin
 assertEquals(
-    "descendant-or-self::node()/child::*[translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = concat('\"That',\"'\",'s mine\", he said.')]",
+    "/descendant-or-self::node()/child::*[translate(normalize-space(self::node()),'ABCDEFGHIJKLMNOPQRSTUVWXYZ','abcdefghijklmnopqrstuvwxyz') = concat('\"That',\"'\",'s mine\", he said.')]",
     xpath {
         anyNode[textIs("\"That's mine\", he said.")]
     }.toString()
@@ -30,7 +30,7 @@ assertEquals(
 checks whether the element has the given class
 ```kotlin
 assertEquals(
-    "descendant-or-self::node()/child::*[contains(concat(' ',attribute::class,' '),' foo ')]",
+    "/descendant-or-self::node()/child::*[contains(concat(' ',attribute::class,' '),' foo ')]",
     xpath { anyNode[hasClass("foo")] }.toString()
 )
 ```
