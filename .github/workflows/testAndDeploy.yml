@@ -1,5 +1,8 @@
 name: test and deploy
-on: push
+on:
+  push:
+    branches:
+      - master
 
 jobs:
   test:
@@ -10,7 +13,6 @@ jobs:
         uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14
   publish:
     needs: test
-    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
