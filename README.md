@@ -26,7 +26,7 @@ assertEquals(
     }.toString()
 )
 ```
-##### classContains
+##### hasClass
 checks whether the element has the given class
 ```kotlin
 assertEquals(
