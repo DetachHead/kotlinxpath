@@ -18,6 +18,8 @@ jobs:
       - uses: actions/checkout@v2
       - name: gradle publish
         uses: OrangeLabs-moe/gradle-actions@v5.0-openjdk-14
+        with:
+          args: publish
     env:
       MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
       MAVEN_KEY: ${{ secrets.MAVEN_KEY }}
