@@ -99,10 +99,11 @@ configure<PublishingExtension> {
     }
     props?.let {
         repositories {
-            maven("https://api.bintray.com/maven/detachhead/detach/${project.name}/;publish=1") {
+            val (owner, project) = System.getenv("GITHUB_REPOSITORY").toLowerCase().split('/')
+            maven("https://maven.pkg.github.com/$owner/$project") {
                 credentials {
-                    username = System.getenv("MAVEN_USERNAME")
-                    password = System.getenv("MAVEN_KEY")
+                    username = owner
+                    password = System.getenv("GITHUB_TOKEN")
                 }
             }
         }
