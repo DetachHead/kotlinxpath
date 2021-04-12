@@ -5,8 +5,10 @@ plugins {
     id("org.jetbrains.dokka") version "1.4.20-dev-10"
     `maven-publish`
 }
+
 group = "io.github.detachhead"
 version = "2.0"
+
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
