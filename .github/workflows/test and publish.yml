@@ -1,0 +1,41 @@
+name: test and publish
+on:
+  - push
+  - pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - run: ./gradlew check
+  publish:
+    if: ${{ github.ref == 'refs/heads/master' && github.event_name == 'push' }}
+    needs: test
+    runs-on: ubuntu-latest
+    env:
+      MAVEN_REPO: github.com/DetachHead/maven.git
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v2
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: checkout repo into mavenLocal
+        run: |
+          cd ~/.m2
+          git clone https://$MAVEN_REPO
+          mv maven repository
+      - run: ./gradlew publishToMavenLocal
+      - name: commit and push published package
+        run: |
+          cd ~/.m2/repository
+          git config --global user.name 'github actions'
+          git config --global user.email 'detachhead@users.noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.MAVEN_GITHUB_TOKEN }}@$MAVEN_REPO
+          git add -A
+          git commit -m "publish $GITHUB_SHA" && git push
