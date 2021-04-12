@@ -30,7 +30,7 @@ jobs:
           cd ~/.m2
           git clone https://$MAVEN_REPO
           mv maven repository
-      - run: ./gradlew publishToMavenLocal
+      - run: ./gradlew publishToGithubPages
       - name: commit and push published package
         run: |
           cd ~/.m2/repository
