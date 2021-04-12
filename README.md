@@ -51,7 +51,7 @@ assertEquals(
 in your `build.gradle.kts`:
 ```kotlin
 repositories {
-    maven("https://dl.bintray.com/detachhead/detach/")
+    maven("https://detachhead.github.io/maven")
 }
 ```
 
