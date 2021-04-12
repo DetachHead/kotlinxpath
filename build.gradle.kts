@@ -12,6 +12,7 @@ version = "2.0"
 repositories {
     mavenCentral()
     maven("https://maven.pkg.jetbrains.space/kotlin/p/dokka/dev")
+    maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
 }
 
 tasks.withType<KotlinCompile>().configureEach {
