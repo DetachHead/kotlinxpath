@@ -62,7 +62,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.github.detachhead:kotlinxpath:1.0")
+                implementation("io.github.detachhead:kotlinxpath:$version")
             }
         }
     }
