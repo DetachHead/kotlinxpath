@@ -3,6 +3,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("multiplatform") version "1.4.0"
     id("org.jetbrains.dokka") version "1.4.20-dev-10"
+    id("org.jlleitschuh.gradle.ktlint") version "10.1.0"
     `maven-publish`
 }
 
@@ -59,7 +60,7 @@ val publishToGithubPages: Task by tasks.creating {
         val publishLocation = File(publishing.repositories.mavenLocal().url)
             .resolve("${project.group.toString().replace('.', '/')}/${project.name}")
         if (!version.toString()
-                .endsWith("-SNAPSHOT") &&
+            .endsWith("-SNAPSHOT") &&
             publishLocation.list()?.contains(version) == true
         )
             error("$version has already been published")
