@@ -22,8 +22,8 @@ public open class Expression(private val value: String) {
 /** a string represented in an xpath [Expression]. automatically handles escaping quote characters */
 public class XpathString(public val value: String) {
     override fun toString(): String = when {
-        //xpath has no real way of escaping, so use various ways to esc values with quotes.
-        //https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
+        // xpath has no real way of escaping, so use various ways to esc values with quotes.
+        // https://stackoverflow.com/questions/14822153/escape-single-quote-in-xpath-with-nokogiri
         value.contains("'") && value.contains("\"") ->
             expression { concat(*(value.splitKeep("'").map { Expression.fromString(it) }.toTypedArray())) }.toString()
         value.contains("'") -> "\"$value\""
@@ -61,7 +61,7 @@ public class ExpressionBuilder {
         operatorExpression(this, operator, other).also { expression = it }
 
     /* Xpath operators */
-    //=:
+    // =:
     @OperatorMarker
     public infix fun Expression.equal(other: Expression): Expression = this.operator(ComparisonOperator.`=`, other)
     @OperatorMarker
@@ -71,7 +71,7 @@ public class ExpressionBuilder {
     @OperatorMarker
     public infix fun String.equal(other: String): Expression = Expression(this) equal other
 
-    //!=:
+    // !=:
     @OperatorMarker
     public infix fun Expression.not(other: Expression): Expression = this.operator(ComparisonOperator.`=`, other)
     @OperatorMarker
@@ -81,7 +81,7 @@ public class ExpressionBuilder {
     @OperatorMarker
     public infix fun String.not(other: String): Expression = Expression(this) not other
 
-    //>:
+    // >:
     @OperatorMarker
     public infix fun Expression.greaterThan(other: Expression): Expression = operator(ComparisonOperator.greater, other)
     @OperatorMarker
@@ -91,7 +91,7 @@ public class ExpressionBuilder {
     @OperatorMarker
     public infix fun Int.greaterThan(other: Int): Expression = Expression(this) greaterThan other
 
-    //>=:
+    // >=:
     @OperatorMarker
     public infix fun Expression.greaterThanOrEqualTo(other: Expression): Expression =
         operator(ComparisonOperator.greaterOrEqual, other)
@@ -108,7 +108,7 @@ public class ExpressionBuilder {
     public infix fun Int.greaterThanOrEqualTo(other: Int): Expression =
         Expression(toString()) greaterThanOrEqualTo other
 
-    //<:
+    // <:
     @OperatorMarker
     public infix fun Expression.lessThan(other: Expression): Expression = operator(ComparisonOperator.less, other)
     @OperatorMarker
@@ -118,7 +118,7 @@ public class ExpressionBuilder {
     @OperatorMarker
     public infix fun Int.lessThan(other: Int): Expression = Expression(toString()) lessThan other
 
-    //<=:
+    // <=:
     @OperatorMarker
     public infix fun Expression.lessThanOrEqualTo(other: Expression): Expression =
         operator(ComparisonOperator.lessOrEqual, other)
@@ -135,11 +135,11 @@ public class ExpressionBuilder {
     public infix fun Int.lessThanOrEqualTo(other: Int): Expression =
         Expression(toString()) lessThanOrEqualTo other
 
-    //and:
+    // and:
     @OperatorMarker
     public infix fun Expression.and(other: Expression): Expression = operator(BooleanOperator.and, other)
 
-    //or:
+    // or:
     @OperatorMarker
     public infix fun Expression.or(other: Expression): Expression = operator(BooleanOperator.or, other)
 }

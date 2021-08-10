@@ -1,6 +1,5 @@
 package io.github.detachhead.kotlinxpath.components
 
-import io.github.detachhead.kotlinxpath.components.LocationPathBuilder
 import kotlin.js.JsName
 import kotlin.reflect.KProperty
 
@@ -28,7 +27,7 @@ private class NodeTestFunctionDelegate {
         { nodeTestFunction(property.name) }
 }
 
-//constants for HTML node tests (https://developer.mozilla.org/en-US/docs/Web/HTML/Element):
+// constants for HTML node tests (https://developer.mozilla.org/en-US/docs/Web/HTML/Element):
 @NodeTestMarker
 public val LocationPathBuilder.base: NodeTest by NodeTestDelegate()
 @NodeTestMarker
@@ -316,13 +315,13 @@ public val LocationPathBuilder.tt: NodeTest by NodeTestDelegate()
 @NodeTestMarker
 public val LocationPathBuilder.xmp: NodeTest by NodeTestDelegate()
 
-//node test functions
+// node test functions
 @NodeTestMarker
 public val LocationPathBuilder.comment: () -> NodeTest by NodeTestFunctionDelegate()
 @NodeTestMarker
 public val LocationPathBuilder.text: () -> NodeTest by NodeTestFunctionDelegate()
 
-@JsName("processing_instruction") //JsName is banned on properties for some reason
+@JsName("processing_instruction") // JsName is banned on properties for some reason
 public fun LocationPathBuilder.`processing-instruction`(): NodeTest = nodeTestFunction("processing-instruction")
 @NodeTestMarker
 public val LocationPathBuilder.node: () -> NodeTest by NodeTestFunctionDelegate()

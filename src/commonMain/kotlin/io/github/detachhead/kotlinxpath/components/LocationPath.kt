@@ -13,9 +13,9 @@ public open class LocationPath(
     public val predicates: Set<Expression> = setOf(),
     public val child: LocationPath? = null
 ) : Expression(
-    "${if (isRoot) "/" else ""}$axis::$nodetest"
-            + (predicates.takeIf { it.isNotEmpty() }?.joinToString("][", "[", "]") ?: "")
-            + (child?.let { "/$it" } ?: "")
+    "${if (isRoot) "/" else ""}$axis::$nodetest" +
+        (predicates.takeIf { it.isNotEmpty() }?.joinToString("][", "[", "]") ?: "") +
+        (child?.let { "/$it" } ?: "")
 )
 
 /**
@@ -38,15 +38,15 @@ public class LocationPathBuilder {
      * adds the given [predicates] to the current [LocationPath]
      */
     public operator fun LocationPath.get(predicates: ExpressionBuilder.() -> Unit): LocationPath = (
-            if (child == null)
-                LocationPath(isRoot, axis, nodetest, this.predicates + expression(predicates))
-            else
-                LocationPath(isRoot, axis, nodetest, this.predicates, child[predicates])
-            ).also { currentXpath = it }
+        if (child == null)
+            LocationPath(isRoot, axis, nodetest, this.predicates + expression(predicates))
+        else
+            LocationPath(isRoot, axis, nodetest, this.predicates, child[predicates])
+        ).also { currentXpath = it }
 
     /** adds the given [predicate] to the current [LocationPath] */
     public operator fun LocationPath.get(predicate: Expression): LocationPath =
-        this[{ expression = predicate }]
+        this[ { expression = predicate }]
 
     /** creates a [LocationPath] from the current [NodeTest] and [predicates] */
     public operator fun NodeTest.get(predicates: ExpressionBuilder.() -> Unit): LocationPath =
@@ -55,8 +55,7 @@ public class LocationPathBuilder {
         }
 
     /** creates a [LocationPath] from the current [NodeTest] and [predicate] */
-    public operator fun NodeTest.get(predicate: Expression): LocationPath = this[{ expression = predicate }]
-
+    public operator fun NodeTest.get(predicate: Expression): LocationPath = this[ { expression = predicate }]
 
     /** creates a [LocationPath] with a [NodeTest] made from the current [String] and [predicates] */
     public operator fun String.get(predicates: ExpressionBuilder.() -> Unit): LocationPath =
@@ -70,11 +69,11 @@ public class LocationPathBuilder {
      * Adds a [LocationPath] to the current [LocationPath]
      */
     public operator fun LocationPath.div(other: LocationPath): LocationPath = (
-            if (child == null)
-                LocationPath(isRoot, axis, nodetest, predicates, other)
-            else
-                LocationPath(isRoot, axis, nodetest, this.predicates, child / other)
-            ).also { currentXpath = it }
+        if (child == null)
+            LocationPath(isRoot, axis, nodetest, predicates, other)
+        else
+            LocationPath(isRoot, axis, nodetest, this.predicates, child / other)
+        ).also { currentXpath = it }
 
     /**
      * appends the given [NodeTest] as a [Axis.child] to the current [LocationPath]
@@ -128,11 +127,11 @@ public class LocationPathBuilder {
      */
     public operator fun String.unaryPlus(): LocationPath = +NodeTest(this)
 
-    //TODO: figure out how to separate these like the rest of the shortcuts (see shortcuts.kt):
+    // TODO: figure out how to separate these like the rest of the shortcuts (see shortcuts.kt):
     /**
      * shortcut for an [ExpressionBuilder.position] predicate
      */
-    public operator fun LocationPath.get(index: Int): LocationPath = this[{ position() equal index.toString() }]
+    public operator fun LocationPath.get(index: Int): LocationPath = this[ { position() equal index.toString() }]
 
     /**
      * shortcut for an [ExpressionBuilder.position] predicate

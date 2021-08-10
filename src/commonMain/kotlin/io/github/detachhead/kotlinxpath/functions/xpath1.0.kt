@@ -12,7 +12,7 @@ internal annotation class FunctionMarker
  * [Xpath 1.0 functions](https://en.wikipedia.org/wiki/XPath#Functions_and_operators)
  */
 
-//TODO: make these less gross. since any of these functions can take xpath Expressions in place of their expected types,
+// TODO: make these less gross. since any of these functions can take xpath Expressions in place of their expected types,
 //  i was forced to write overloads for every possible combination...
 
 @FunctionMarker public fun ExpressionBuilder.position(): Expression = functionExpression("position")
